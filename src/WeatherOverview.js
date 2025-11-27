@@ -7,7 +7,7 @@ import { renderLoadingScreen } from "./loadingScreen";
 
 export async function getOverview() {
   renderLoadingScreen();
-  const data = await getWeatherData("Sulzburg");
+  const data = await getWeatherData("ihringen");
   return await weatherOverview(data);
 }
 
