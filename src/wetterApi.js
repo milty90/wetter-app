@@ -1,8 +1,8 @@
-const APIKEY = "8d884744842ab6341434a68ebb5aaeac";
+const API_KEY = "10abce120a256e5e7252d7164ab73720";
 const BASE_URL = "https://api.openweathermap.org/data/2.5/";
 
 export async function getWeatherData(location) {
-  const apiUrl = `${BASE_URL}weather?q=${location}&appid=${APIKEY}&units=metric&lang=de`;
+  const apiUrl = `${BASE_URL}forecast?q=${location}&appid=${API_KEY}&units=metric&lang=de`;
   try {
     const response = await fetch(apiUrl);
     if (!response.ok) {

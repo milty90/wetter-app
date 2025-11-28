@@ -7,3 +7,17 @@ export function dateFormatter(timestamp) {
 
   return `Heute, ${month}. ${day}. um ${ours}:${minutes}`;
 }
+
+export function dayFormatter(timestamp) {
+  const date = new Date(timestamp * 1000);
+  const days = [
+    "Sonntag",
+    "Montag",
+    "Dienstag",
+    "Mittwoch",
+    "Donnerstag",
+    "Freitag",
+    "Samstag",
+  ];
+  return days[date.getDay()];
+}
