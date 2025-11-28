@@ -5,7 +5,7 @@ export function panelOverview(city, country, dt, temp, temp_max, temp_min) {
         <div class="weather-panel__header">
           <img
             class="weather-panel__header__location-icon"
-            src="./public/location-pin.svg"
+            src="/location-pin.svg"
             alt="Location Icon"
           />
           <p class="weather-panel__header__location">${city}, ${country}</p>
