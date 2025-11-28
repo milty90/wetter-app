@@ -1,6 +1,6 @@
 import { panelOverview } from "./panelOverview";
 import { panelOptions } from "./panelOptions";
-import { panelDetails } from "./paneldetails";
+import { panelDetails } from "./panelDetails";
 import { getWeatherData } from "./wetterApi";
 import { forecastItem, forcastDayItem } from "./forcast";
 import { renderLoadingScreen } from "./loadingScreen";
