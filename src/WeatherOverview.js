@@ -9,7 +9,7 @@ import { bodyDetails } from "./bodyDetails";
 
 export async function getOverview() {
   renderLoadingScreen();
-  const data = await getWeatherData("Ihringen");
+  const data = await getWeatherData("Mannheim");
   return await weatherOverview(data);
 }
 
@@ -45,7 +45,7 @@ export async function weatherOverview(data) {
            .map((item) =>
              forecastItem(
                item.weather[0].icon,
-               new Date(item.dt * 1000).getHours() + ":00",
+               new Date(item.dt * 1000).getHours() + " Uhr",
                Math.round(item.main.temp)
              )
            )
@@ -73,7 +73,7 @@ export async function weatherOverview(data) {
                  .map((item) =>
                    forecastItem(
                      item.weather[0].icon,
-                     new Date(item.dt * 1000).getHours() + ":00",
+                     new Date(item.dt * 1000).getHours() + " Uhr",
                      Math.round(item.main.temp)
                    )
                  )
