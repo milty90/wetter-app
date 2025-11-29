@@ -1,3 +1,5 @@
+import { bodyDetails } from "./bodyDetails";
+
 export function forecastItem(icon, time, temp) {
   return `
     <div class="weather-forecast__item">
@@ -17,7 +19,9 @@ export function forcastDayItem(
   day,
   tempRangeMin,
   tempRangeMax,
-  description
+  description,
+  hourlyItems,
+  bodyDetails
 ) {
   return `
   <div class="weather-forecast__dayItem">
@@ -36,10 +40,14 @@ export function forcastDayItem(
           </div>
     </div>
     <div class="weather-forecast__dayItem-body">
-
-
-    </div>
-  </div>
+    <div class="weather-forecast__day-Content">
+    ${bodyDetails}
     
-    `;
+    </div>
+    <div class="weather-forecast__dayItem-body-divider"></div>
+    <div class="weather-forecast__hourlyItems">
+        ${hourlyItems}
+      </div>
+    </div>
+  </div>`;
 }

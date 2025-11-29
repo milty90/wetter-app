@@ -203,10 +203,9 @@ body {
     overflow-x: auto;
     align-items: start;
     justify-content: left;
-    padding: 10px 10px 0 30px;
+    padding: 10px 30px 0 30px;
     margin: 10px 10px 0 10px;
     height: 25%;
-
     gap: 2.5rem;
     scrollbar-width: none;
   }
@@ -222,12 +221,14 @@ body {
       font-size: 14px;
       color: #888888;
     }
+
     &__icon {
       width: 50px;
       height: 50px;
       background-color: lightgray;
       border-radius: 25px;
     }
+
     &__temp {
       font-size: 20px;
       font-weight: 600;
@@ -274,11 +275,6 @@ body {
     font-weight: 600;
   }
 
-  & img {
-    width: 40px;
-    height: 40px;
-  }
-
   &__dayHeader {
     display: flex;
     flex-direction: column;
@@ -309,17 +305,60 @@ body {
       color: #888888;
     }
   }
+
   &__dayItem-body {
     display: flex;
-    flex-direction: row;
-
+    flex-direction: column;
     width: 100%;
     padding: 10px 0;
     overflow-x: auto;
     scrollbar-width: none;
     width: 360px;
-    height: 100px;
+    height: fit-content;
     border-radius: 0px 0px 25px 25px;
     border: #f0f0f0 2px solid;
+  }
+
+  &__body-details {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    gap: 20px;
+    padding: 10px 0;
+    width: 100%;
+    color: #555555;
+  }
+  &__body-detail-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+  }
+
+  &__body-detail-item__icon {
+    width: 50px;
+    filter: invert(30%);
+  }
+
+  &__dayItem-body-divider {
+    width: 340px;
+    height: 1px;
+    background-color: #cccccc;
+    margin: 0 10px;
+  }
+  &__hourlyItems {
+    display: flex;
+    flex-direction: row;
+    overflow-y: auto;
+    align-items: center;
+    justify-content: start;
+
+    width: 370px;
+    height: fit-content;
+    padding: 15px 15px 15px 15px;
+    gap: 2.5rem;
+    scrollbar-width: none;
   }
 }
