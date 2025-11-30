@@ -54,7 +54,7 @@ export async function weatherOverview(data) {
            <p class="weather-forecast__title ">Nächste 4 tagen</p>
            <div class="weather-forecast__dayItems">
          ${(() => {
-           // Csoportosítás nap szerint
+           // Gruppierung nach Tag
            const groupedByDay = {};
            data.list.forEach((item) => {
              const date = new Date(item.dt * 1000).toDateString();
@@ -64,7 +64,7 @@ export async function weatherOverview(data) {
              groupedByDay[date].push(item);
            });
 
-           // Utolsó 4 nap (kihagyva a mait)
+           // Die nächsten 4 Tage rendern
            return Object.entries(groupedByDay)
              .slice(1, 5)
              .map(([date, items]) => {
@@ -110,6 +110,5 @@ export async function weatherOverview(data) {
              .join("");
          })()}
       </div>
- 
-</div>`;
+ </div>`;
 }

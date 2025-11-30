@@ -113,8 +113,34 @@ body {
 
   &__options {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-between;
+    align-items: start;
+    gap: 1rem;
+
+    #cancel {
+      display: none;
+    }
+
+    #arrow {
+      display: none;
+    }
+
+    #favorite {
+      display: none;
+    }
+  }
+
+  &__options-left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__options-right {
+    display: flex;
+    flex-direction: column;
     align-items: center;
     gap: 2rem;
   }
@@ -240,14 +266,13 @@ body {
     display: flex;
     flex-direction: column;
     overflow-y: auto;
+    overflow-x: hidden;
     align-items: center;
     justify-content: start;
 
-    width: 370px;
     height: 100%;
     padding: 15px 15px 15px 15px;
     gap: 15px;
-    scrollbar-width: none;
   }
 
   &__dayItem {
@@ -311,7 +336,6 @@ body {
     flex-direction: column;
     width: 100%;
     padding: 10px 0;
-    overflow-x: auto;
     scrollbar-width: none;
     width: 360px;
     height: fit-content;
@@ -322,6 +346,7 @@ body {
   &__body-details {
     display: flex;
     flex-direction: row;
+    scrollbar-width: none;
     justify-content: space-around;
     align-items: center;
     gap: 20px;
@@ -351,13 +376,11 @@ body {
   &__hourlyItems {
     display: flex;
     flex-direction: row;
-    overflow-y: auto;
-    align-items: center;
-    justify-content: start;
-
-    width: 370px;
+    overflow-x: auto;
+    align-items: start;
+    justify-content: left;
     height: fit-content;
-    padding: 15px 15px 15px 15px;
+    padding: 25px 25px 10px 25px;
     gap: 2.5rem;
     scrollbar-width: none;
   }
