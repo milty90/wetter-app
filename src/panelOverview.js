@@ -19,5 +19,9 @@ export function panelOverview(city, country, dt, temp, temp_max, temp_min) {
           <p class="weather-panel__min-temp">Min: ${temp_min.toFixed(1)}°C</p>
           <p class="weather-panel__max-temp">Max: ${temp_max.toFixed(1)}°C</p>
         </div>
+        <div class="weather-panel__sunrise-sunset">
+          <p class="weather-panel__sunrise">Min: ${temp_min.toFixed(1)}°C</p>
+          <p class="weather-panel__sunset">Max: ${temp_max.toFixed(1)}°C</p>
+        </div>
       </div>`;
 }

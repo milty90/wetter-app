@@ -1,12 +1,14 @@
 import "./style.scss";
 import "/src/wetterApi.js";
 import { getOverview } from "./WeatherOverview";
+import { setBackground } from "./backgroundManager";
 
 async function init() {
-  const html = await getOverview();
+  const { html, weatherData } = await getOverview();
   document.querySelector("#app").innerHTML = html;
 
-  // Event listeners hozzáadása MIUTÁN a HTML renderelve van
+  setBackground(weatherData.id, weatherData.dt, weatherData.sys);
+
   const menuButton = document.getElementById("menu");
   const cancelButton = document.getElementById("cancel");
   const favoriteButton = document.getElementById("favorite");

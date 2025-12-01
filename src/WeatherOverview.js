@@ -9,8 +9,14 @@ import { bodyDetails } from "./bodyDetails";
 
 export async function getOverview() {
   renderLoadingScreen();
-  const data = await getWeatherData("Mannheim");
-  return await weatherOverview(data);
+  const data = await getWeatherData("Los Angeles");
+  const weatherData = {
+    id: data.list[0].weather[0].id,
+    dt: data.list[0].dt,
+    sys: data.list[0].sys.pod,
+  };
+  const html = await weatherOverview(data);
+  return { html, weatherData };
 }
 
 export async function weatherOverview(data) {
@@ -24,6 +30,7 @@ export async function weatherOverview(data) {
         main: { temp, temp_max, temp_min, humidity, feels_like },
         weather: [{ description, id }],
         wind: { speed },
+        sys: { pod },
       },
     ],
   } = data || {};
@@ -31,7 +38,7 @@ export async function weatherOverview(data) {
   return ` 
   <div class="weather-main">  
   <div class="weather-panel">
-      ${panelOverview(city, country, dt, temp, temp_max, temp_min)}
+      ${panelOverview(city, country, dt, temp, temp_max, temp_min, pod)}
       ${panelOptions(description, id)}
   </div>
   <div class="weather-details">
