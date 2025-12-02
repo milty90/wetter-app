@@ -1,6 +1,16 @@
-import { dateFormatter } from "./dateFormatter";
+import { dateFormatter, timeFormatter } from "./dateFormatter";
 
-export function panelOverview(city, country, dt, temp, temp_max, temp_min) {
+export function panelOverview(
+  city,
+  country,
+  dt,
+  temp,
+  temp_max,
+  temp_min,
+  pod,
+  sunrise,
+  sunset
+) {
   return `<div class="weather-panel__overview">
         <div class="weather-panel__header">
           <img
@@ -20,8 +30,22 @@ export function panelOverview(city, country, dt, temp, temp_max, temp_min) {
           <p class="weather-panel__max-temp">Max: ${temp_max.toFixed(1)}°C</p>
         </div>
         <div class="weather-panel__sunrise-sunset">
-          <p class="weather-panel__sunrise">Min: ${temp_min.toFixed(1)}°C</p>
-          <p class="weather-panel__sunset">Max: ${temp_max.toFixed(1)}°C</p>
+        <img
+            style="width: 40px; height: 40px"
+            class="weather-panel__header__location-icon"
+            src="/weather-icons/uv-up.svg"
+            alt="Sunrise Icon"
+          /> 
+          <p class="weather-panel__sunrise">
+          ${timeFormatter(sunrise)}</p>
+          <img
+            style="width: 40px; height: 40px"
+            class="weather-panel__header__location-icon"
+            src="/weather-icons/uv-down.svg"
+            alt="Sunset Icon"
+          /> 
+          <p class="weather-panel__sunset">
+          ${timeFormatter(sunset)}</p>
         </div>
       </div>`;
 }

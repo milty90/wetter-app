@@ -9,7 +9,7 @@ import { bodyDetails } from "./bodyDetails";
 
 export async function getOverview() {
   renderLoadingScreen();
-  const data = await getWeatherData("Los Angeles");
+  const data = await getWeatherData("Ihringen");
   const weatherData = {
     id: data.list[0].weather[0].id,
     dt: data.list[0].dt,
@@ -38,7 +38,17 @@ export async function weatherOverview(data) {
   return ` 
   <div class="weather-main">  
   <div class="weather-panel">
-      ${panelOverview(city, country, dt, temp, temp_max, temp_min, pod)}
+      ${panelOverview(
+        city,
+        country,
+        dt,
+        temp,
+        temp_max,
+        temp_min,
+        pod,
+        sunrise,
+        sunset
+      )}
       ${panelOptions(description, id)}
   </div>
   <div class="weather-details">
