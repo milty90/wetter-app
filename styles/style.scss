@@ -1,4 +1,5 @@
 @use "variables" as *;
+@import "../styles/mixins";
 
 * {
   padding: 0;
@@ -16,7 +17,7 @@ body {
 }
 
 #app {
-  height: 700px;
+  height: 740px;
   width: 400px;
   ::-webkit-scrollbar {
     display: none;
@@ -70,7 +71,86 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 45px 20px 0px 30px;
+  padding: 40px 20px 0px 30px;
+  transition: all 0.3s ease;
+
+  &.sticky {
+    @include sticky-header-on-scroll;
+    flex-direction: row;
+
+    .weather-panel__overview {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 25px;
+    }
+
+    .weather-panel__current-date {
+      display: none;
+    }
+    .weather-panel__header__location {
+      font-size: 16px !important;
+    }
+    .weather-panel__header__location-icon {
+      width: 16px !important;
+    }
+
+    .weather-panel__min-max-temp,
+    .weather-panel__sunrise-sunset {
+      display: none; // Hide extra details
+    }
+
+    .weather-panel__temp-container {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+
+      .weather-panel__temperature {
+        font-size: 35px !important; // Smaller temperature
+      }
+      .weather-panel__temperature-unit {
+        font-size: 15px !important;
+        margin-top: 4px !important;
+        margin-left: 1px;
+      }
+    }
+    .weather-panel__options {
+      display: flex;
+
+      margin: 0;
+
+      .weather-panel__menu-icon {
+        display: none;
+      }
+      .weather-panel__options-left {
+        display: none;
+      }
+      .weather-panel__options-right {
+        display: block;
+        height: 40px;
+        margin: 0;
+      }
+
+      .weather-panel__condition-text {
+        display: none;
+      }
+      .weather-panel__condition-icon {
+        transform: rotate(0deg);
+      }
+
+      #cancel {
+        display: none;
+      }
+
+      #arrow {
+        display: none;
+      }
+
+      #favorite {
+        display: none;
+      }
+    }
+  }
 
   &__ovwerview {
     display: flex;
@@ -274,6 +354,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: padding 0.3s ease;
 
   &__container {
     display: flex;
@@ -287,13 +368,37 @@ body {
     box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em,
       rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em,
       rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+
+    &.with-sticky-header {
+      border-radius: 0px;
+    }
   }
 
-  &__title {
+  &__title-Hours {
     font-size: 20px;
     font-weight: 600;
     text-align: start;
     padding: 40px 15px 0 25px;
+    color: $color-dark;
+
+    &.with-sticky-header {
+      padding: 90px 15px 0 25px;
+    }
+  }
+
+  &__title-Hours {
+    font-size: 20px;
+    font-weight: 600;
+    text-align: start;
+    padding: 40px 15px 0 25px;
+    color: $color-dark;
+  }
+
+  &__title-Days {
+    font-size: 20px;
+    font-weight: 600;
+    text-align: start;
+    padding: 30px 15px 5px 25px;
     color: $color-dark;
   }
 
@@ -305,7 +410,7 @@ body {
     justify-content: left;
     padding: 10px 30px 0 30px;
     margin: 10px 10px 0 10px;
-    height: 25%;
+    height: 30%;
     gap: 2.5rem;
     scrollbar-width: none;
   }
@@ -343,7 +448,6 @@ body {
     overflow-x: hidden;
     align-items: center;
     justify-content: start;
-
     height: 100%;
     padding: 15px 15px 15px 15px;
     gap: 15px;

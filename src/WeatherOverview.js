@@ -9,7 +9,7 @@ import { bodyDetails } from "./bodyDetails";
 
 export async function getOverview() {
   renderLoadingScreen();
-  const data = await getWeatherData("Kapstadt");
+  const data = await getWeatherData("Ihringen");
   const weatherData = {
     id: data.list[0].weather[0].id,
     dt: data.list[0].dt,
@@ -55,7 +55,7 @@ export async function weatherOverview(data) {
     ${panelDetails(speed, humidity, feels_like)}
   </div>
   <div class="weather-forecast__container">
-        <p class="weather-forecast__title ">Stunden Vorhersage</p>
+        <p class="weather-forecast__title-Hours ">Stunden Vorhersage</p>
         <div class="weather-forecast__items">
          ${data.list
            .slice(0, 8)
@@ -68,7 +68,7 @@ export async function weatherOverview(data) {
            )
            .join("")}
            </div>
-           <p class="weather-forecast__title ">Nächste 4 tagen</p>
+           <p class="weather-forecast__title-Days ">Nächste 4 tagen</p>
            <div class="weather-forecast__dayItems">
          ${(() => {
            // Gruppierung nach Tag

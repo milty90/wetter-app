@@ -9,6 +9,35 @@ async function init() {
 
   setBackground(weatherData.id, weatherData.dt, weatherData.sys);
 
+  // Sticky header on scroll
+  const weatherMain = document.querySelector(".weather-main");
+  const weatherPanel = document.querySelector(".weather-panel");
+  const weatherForecastTitle = document.querySelector(
+    ".weather-forecast__title-Hours "
+  );
+  const weatherForecastContainer = document.querySelector(
+    ".weather-forecast__container"
+  );
+
+  if (
+    weatherMain &&
+    weatherForecastContainer &&
+    weatherPanel &&
+    weatherForecastTitle
+  ) {
+    weatherMain.addEventListener("scroll", () => {
+      if (weatherMain.scrollTop > 120) {
+        weatherPanel.classList.add("sticky");
+        weatherForecastContainer.classList.add("with-sticky-header");
+        weatherForecastTitle.classList.add("with-sticky-header");
+      } else {
+        weatherPanel.classList.remove("sticky");
+        weatherForecastContainer.classList.remove("with-sticky-header");
+        weatherForecastTitle.classList.remove("with-sticky-header");
+      }
+    });
+  }
+
   const menuButton = document.getElementById("menu");
   const cancelButton = document.getElementById("cancel");
   const favoriteButton = document.getElementById("favorite");
