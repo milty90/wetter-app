@@ -15,7 +15,9 @@ export function getBackgroundImage(weatherId, timestamp, sys) {
   else if (weatherId >= 801 && weatherId <= 802) weather = "clouds";
   else if (weatherId > 802) weather = "overcast";
 
-  return `/backgrounds/${timeOfDay}_${weather}.jpg`;
+  const imagePath = `/backgrounds/${timeOfDay}_${weather}.jpg`;
+  console.log("Generated image path:", imagePath);
+  return imagePath;
 }
 
 export function setBackground(weatherId, timestamp, sys) {
@@ -44,73 +46,23 @@ export function setBackground(weatherId, timestamp, sys) {
     });
 
     if (weatherMain) {
-      // Set background on ::before pseudo-element via CSS custom property
       weatherMain.style.setProperty("--bg-image", `url('${bgImage}')`);
+      weatherMain.style.backgroundImage = `url('${bgImage}')`;
+      weatherMain.style.backgroundSize = "cover";
 
-      // Set overlay color based on day/night
       if (isDay) {
-        console.log("Is day mode, checking weatherId:", weatherId);
-        // Drizzle weather
-        if (
-          (weatherId >= 300 && weatherId < 501) ||
-          (weatherId >= 501 && weatherId < 800) ||
-          (weatherId >= 700 && weatherId < 800) ||
-          (weatherId >= 801 && weatherId <= 802) ||
-          weatherId > 802
-        ) {
-          console.log("Applying drizzle colors!");
-          if (locationIcon) {
-            locationIcon.style.filter =
-              "invert(10%) drop-shadow(2px 2px 2px #ffffffff)";
-          }
-          if (location) {
-            location.style.color = "#242424";
-            location.style.fontWeight = "bold";
-            location.style.fontSize = "26px";
-            location.style.textShadow =
-              "-1px -1px 0 #ffffff5c, 1px -1px 0 #ffffff80, -1px 1px 0 #ffffff80, 1px 1px 0 #ffffffff";
-          }
-          if (current_date) {
-            current_date.style.color = "#EB6E4C";
-            current_date.style.fontWeight = "bold";
-            current_date.style.fontSize = "20px";
-            current_date.style.textShadow = "#282828ff 0.5px 0.5px 0.5px";
-          }
-          if (condition_text) {
-            condition_text.style.color = "#EB6E4C";
-            condition_text.style.fontWeight = "bold";
-            condition_text.style.fontSize = "20px";
-            condition_text.style.textShadow = "#282828ff 0.5px 0.5px 0.5px";
-          }
+        if (locationIcon) {
+          locationIcon.style.filter = "invert(90%) ";
+        }
+        if (location) {
+          location.style.color = "rgba(255, 255, 255, 0.8)";
         }
       } else {
-        if (
-          (weatherId >= 600 && weatherId < 700) ||
-          (weatherId >= 300 && weatherId < 501)
-        ) {
-          if (locationIcon) {
-            locationIcon.style.filter =
-              "invert(10%) drop-shadow(1px 1px 1px #ffffffff)";
-          }
-          if (location) {
-            location.style.color = "#242424";
-            location.style.fontWeight = "bold";
-            location.style.fontSize = "26px";
-            location.style.textShadow =
-              "-1px -1px 0 #ffffff5c, 1px -1px 0 #ffffff80, -1px 1px 0 #ffffff80, 1px 1px 0 #ffffffff";
-          }
-          if (current_date) {
-            current_date.style.color = "#EB6E4C";
-            current_date.style.fontWeight = "bold";
-            current_date.style.fontSize = "20px";
-            current_date.style.textShadow = "#282828ff 0.5px 0.5px 0.5px";
-          }
-          if (condition_text) {
-            condition_text.style.color = "#EB6E4C";
-            condition_text.style.fontWeight = "bold";
-            condition_text.style.fontSize = "20px";
-            condition_text.style.textShadow = "#282828ff 0.5px 0.5px 0.5px";
-          }
+        if (locationIcon) {
+          locationIcon.style.filter = "invert(10%)";
+        }
+        if (location) {
+          location.style.color = "rgba(0, 0, 0, 0.8)";
         }
       }
 

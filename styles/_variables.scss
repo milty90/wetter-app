@@ -1,0 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Jura:wght@300..700&family=Pathway+Extreme:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&family=Quicksand:wght@300..700&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
+@import "loader.scss";
+
+$font-quicksand: "Quicksand", sans-serif;
+$font-do-hyeon: "Do Hyeon", sans-serif;
+$color-light: #eaeaea;
+$color-dark: #242424;
+$text-shadow-light: #606060 0.5px 0.5px 0.5px;
+$text-shadow-dark: #242424 2px 2px 4px;
+$primary-color: #eb6e4c;
+$linear-gradient: linear-gradient(
+  to bottom,
+  rgba(0, 0, 0, 0.5),
+  rgba(0, 0, 0, 0.1)
+);

@@ -32,7 +32,7 @@ export function panelOverview(
         <div class="weather-panel__sunrise-sunset">
         <img
             style="width: 40px; height: 40px"
-            class="weather-panel__header__location-icon"
+            class="weather-panel__sunrise-icon"
             src="/weather-icons/uv-up.svg"
             alt="Sunrise Icon"
           /> 
@@ -40,7 +40,7 @@ export function panelOverview(
           ${timeFormatter(sunrise)}</p>
           <img
             style="width: 40px; height: 40px"
-            class="weather-panel__header__location-icon"
+            class="weather-panel__sunset-icon"
             src="/weather-icons/uv-down.svg"
             alt="Sunset Icon"
           /> 

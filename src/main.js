@@ -1,4 +1,4 @@
-import "./style.scss";
+import "/styles/style.scss";
 import "/src/wetterApi.js";
 import { getOverview } from "./WeatherOverview";
 import { setBackground } from "./backgroundManager";

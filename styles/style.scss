@@ -1,5 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Jura:wght@300..700&family=Pathway+Extreme:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&family=Quicksand:wght@300..700&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
-@import "loader.scss";
+@use "variables" as *;
 
 * {
   padding: 0;
@@ -10,17 +9,15 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #242424;
+  background-color: $color-dark;
   height: 100vh;
-  font-family: "Quicksand", sans-serif;
-  color: #ffffff;
+  font-family: $font-quicksand;
+  color: $color-light;
 }
 
 #app {
   height: 700px;
   width: 400px;
-  // background-color: #1e1e1e;
-  background-image: linear-gradient(to bottom, #2c2c2c, #858585);
   ::-webkit-scrollbar {
     display: none;
   }
@@ -44,18 +41,13 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: var(
-      --bg-image,
-      linear-gradient(to bottom, #2c2c2c, #858585)
-    );
+    background-image: var(--bg-image, $linear-gradient);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    // filter: blur(1px);
     z-index: 0;
   }
 
-  // Overlay for day/night effect
   &::after {
     content: "";
     position: absolute;
@@ -63,12 +55,11 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: var(--overlay-color, transparent);
+    background: $linear-gradient;
     z-index: 0;
-    pointer-events: none; // Allow clicks through overlay
+    pointer-events: none;
   }
 
-  // All child elements need to be above the background
   > * {
     position: relative;
     z-index: 1;
@@ -94,6 +85,11 @@ body {
   &__header {
     display: flex;
     width: fit-content;
+    background-color: $primary-color;
+    border-radius: 25px;
+    padding: 8px 15px 10px 12px;
+    margin-left: -5px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
     flex-direction: row;
     text-align: center;
     align-items: center;
@@ -101,23 +97,20 @@ body {
 
     &__location-icon {
       width: 24px;
-      font-weight: 600;
-      filter: invert(90%) drop-shadow(0.06em 0.06em 0.06em #606060);
     }
 
     &__location {
-      font-size: 24px;
-      color: #fff;
-      text-shadow: #606060 0.5px 0.5px 0.5px;
+      font-size: 22px;
+      font-weight: bold;
     }
   }
 
   &__current-date {
     width: fit-content;
     margin-top: 10px;
-    font-size: 14px;
-    color: #fff;
-    text-shadow: #606060 0.5px 0.5px 0.5px;
+    font-size: 18px;
+    font-weight: bold;
+    color: $primary-color;
   }
 
   &__temp-container {
@@ -131,17 +124,17 @@ body {
     margin-top: -90px;
     font-size: 40px;
     font-weight: 600;
-    color: #eaeaea;
+    color: $color-light;
     margin-left: 5px;
-    text-shadow: #242424 2px 2px 4px;
+    text-shadow: $text-shadow-dark;
   }
 
   &__temperature {
-    font-family: "Do Hyeon", sans-serif;
+    font-family: $font-do-hyeon;
     font-size: 160px;
     font-weight: 400;
-    color: #eaeaea;
-    text-shadow: #242424 2px 2px 4px;
+    color: $color-light;
+    text-shadow: $text-shadow-dark;
   }
 
   &__sunrise-sunset {
@@ -153,12 +146,18 @@ body {
     font-weight: 700;
     width: fit-content;
     font-size: 16px;
-    color: #eaeaea;
+    color: $color-light;
     border: 1px solid rgba(136, 136, 136, 0.45);
     background-color: rgba(0, 0, 0, 0.1);
-    text-shadow: #242424 1px 1px 1px;
+    text-shadow: $text-shadow-dark;
     backdrop-filter: blur(4px);
     border-radius: 15px;
+  }
+
+  &__sunrise-icon,
+  &__sunset-icon {
+    width: 40px;
+    filter: invert(90%) drop-shadow(0.06em 0.06em 0.06em #242424);
   }
 
   &__min-max-temp {
@@ -168,9 +167,9 @@ body {
     width: fit-content;
     font-weight: 700;
     font-size: 16px;
-    color: #eaeaea;
+    color: $color-light;
     margin-top: 0.5rem;
-    text-shadow: #242424 1px 1px 1px;
+    text-shadow: $text-shadow-dark;
     border: 1px solid rgba(136, 136, 136, 0.45);
     background-color: rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(4px);
@@ -182,6 +181,7 @@ body {
     flex-direction: row;
     justify-content: space-between;
     align-items: start;
+    margin-top: 10px;
     gap: 1rem;
 
     #cancel {
@@ -201,6 +201,7 @@ body {
     display: flex;
     flex-direction: row;
     align-items: center;
+    margin-left: 25px;
     gap: 1rem;
   }
 
@@ -218,30 +219,27 @@ body {
     margin-bottom: 2rem;
     align-items: center;
     justify-content: center;
-    text-shadow: #242424 2px 2px 4px;
     gap: 1rem;
-    color: #bbbbbb;
     cursor: pointer;
   }
 
   &__menu-icon {
     width: 30px;
-    filter: invert(60%);
+    filter: invert(90%);
   }
 
   &__condition-text {
     writing-mode: vertical-lr;
     transform: rotate(180deg);
-    font-size: 17px;
-    color: #ffffff;
-    font-weight: 600;
-    text-shadow: #000000 1px 1px 5px;
+    font-size: 18px;
+    color: $primary-color;
+    font-weight: bold;
   }
 
   &__condition-icon {
     transform: rotate(270deg);
     width: 40px;
-    filter: invert(100%) drop-shadow(0.06em 0.06em 0.06em #242424);
+    filter: invert(100%) drop-shadow($text-shadow-light);
   }
 
   &__details {
@@ -253,8 +251,8 @@ body {
     font-weight: 700;
     padding: 15px;
     width: 300px;
-    color: #eaeaea;
-    text-shadow: #242424 1px 1px 1px;
+    color: $color-light;
+    text-shadow: $text-shadow-dark;
     backdrop-filter: blur(8px);
     border: 1px solid rgba(136, 136, 136, 0.45);
     background-color: rgba(0, 0, 0, 0.2);
@@ -268,6 +266,7 @@ body {
     gap: 10px;
   }
 }
+
 .weather-forecast {
   border-top: 1px solid #444444;
   padding: 20px 0;
@@ -282,19 +281,20 @@ body {
     width: 100%;
     height: 100%;
     margin: 1px;
-    background-color: #ffffff;
+    background-color: $color-light;
     border-radius: 15px 15px 0 0;
-    color: #888888;
+    color: $color-dark;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em,
       rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em,
       rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
   }
 
   &__title {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 600;
     text-align: start;
-    padding: 15px 15px 0 25px;
+    padding: 40px 15px 0 25px;
+    color: $color-dark;
   }
 
   &__items {
@@ -319,7 +319,7 @@ body {
 
     &__time {
       font-size: 14px;
-      color: #888888;
+      color: gray;
     }
 
     &__icon {
@@ -332,7 +332,7 @@ body {
     &__temp {
       font-size: 20px;
       font-weight: 600;
-      color: #888888;
+      color: $color-dark;
     }
   }
 
@@ -368,7 +368,7 @@ body {
     gap: 1rem;
     width: 90%;
     padding: 1rem;
-    background-color: #f0f0f0;
+    background-color: lightgray;
     border-radius: 20px 20px 0 0;
     color: #555555;
     font-weight: 600;
@@ -385,6 +385,7 @@ body {
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
+
       width: 100%;
       gap: 10px;
     }
@@ -392,16 +393,17 @@ body {
     &__day {
       font-size: 16px;
       font-weight: 600;
+      color: $color-dark;
     }
 
     &__tempRange {
       font-size: 14px;
-      color: #888888;
+      color: $color-dark;
     }
 
     &__description {
       font-size: 14px;
-      color: #888888;
+      color: gray;
     }
   }
 
@@ -413,8 +415,9 @@ body {
     scrollbar-width: none;
     width: 360px;
     height: fit-content;
+
     border-radius: 0px 0px 25px 25px;
-    border: #f0f0f0 2px solid;
+    border: lightgray 2px solid;
   }
 
   &__body-details {
@@ -424,7 +427,7 @@ body {
     justify-content: space-around;
     align-items: center;
     gap: 20px;
-    padding: 10px 0;
+    padding: 10px 0 25px 0;
     width: 100%;
     color: #555555;
   }
@@ -441,10 +444,16 @@ body {
     filter: invert(30%);
   }
 
+  &__body-detail-item__value {
+    font-size: 14px;
+    font-weight: 500;
+    color: $color-dark;
+  }
+
   &__dayItem-body-divider {
     width: 340px;
     height: 1px;
-    background-color: #cccccc;
+    background-color: lightgray;
     margin: 0 10px;
   }
   &__hourlyItems {

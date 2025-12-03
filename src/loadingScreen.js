@@ -10,7 +10,7 @@ export function loadingScreen() {
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 100 100"
           >
-            <defs>
+          <defs>
               <filter id="roundness">
                 <feGaussianBlur
                   in="SourceGraphic"
@@ -71,7 +71,6 @@ export function loadingScreen() {
             ></rect>
           </svg>
         </div>
-
         <div class="loading__text">Wetterdaten werden geladen...</div>
       </div>`;
 }
