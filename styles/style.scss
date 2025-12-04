@@ -96,6 +96,11 @@ body {
     .weather-panel__current-date {
       display: none;
     }
+
+    .weather-panel__header {
+      margin: 0;
+    }
+
     .weather-panel__header__location {
       font-size: 16px !important;
     }
@@ -472,7 +477,7 @@ body {
     justify-content: start;
     gap: 1rem;
     width: 85vw;
-    padding: 1rem 1.5rem 1rem 1rem;
+    padding: 0.8rem 1.5rem 0.8rem 1rem;
     background-color: lightgray;
     border-radius: 20px 20px 0 0;
     color: #555555;
@@ -521,7 +526,7 @@ body {
     display: flex;
     flex-direction: column;
     width: 85vw;
-    padding: 10px 0;
+    padding: 5px 0;
     scrollbar-width: none;
     height: fit-content;
     border-radius: 0px 0px 25px 25px;
