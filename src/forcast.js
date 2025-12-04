@@ -40,6 +40,14 @@ export function forcastDayItem(
           </div>
     </div>
     <div class="weather-forecast__dayItem-body">
+    <img
+        class="weather-forecast__arrow-down-icon"
+        src="/chevron-down.svg"
+        alt="Arrow Down"/>
+        <img
+        class="weather-forecast__arrow-up-icon"
+        src="/chevron-up.svg"
+        alt="Arrow Up"/>
     <div class="weather-forecast__day-Content">
     ${bodyDetails}
     

@@ -17,10 +17,18 @@ body {
 }
 
 #app {
-  height: 740px;
-  width: 400px;
-  ::-webkit-scrollbar {
-    display: none;
+  font-family: $font-quicksand;
+  height: 100vh;
+  width: 100%;
+
+  @include largeScreens {
+    height: 900px;
+    width: 400px;
+    min-height: unset;
+    overflow: auto;
+    ::-webkit-scrollbar {
+      display: none;
+    }
   }
 }
 
@@ -330,7 +338,7 @@ body {
     margin: 30px 30px 30px 30px;
     font-weight: 700;
     padding: 15px;
-    width: 300px;
+    min-width: max-content;
     color: $color-light;
     text-shadow: $text-shadow-dark;
     backdrop-filter: blur(8px);
@@ -378,27 +386,19 @@ body {
     font-size: 20px;
     font-weight: 600;
     text-align: start;
-    padding: 40px 15px 0 25px;
+    padding: 40px 15px 5px 25px;
     color: $color-dark;
 
     &.with-sticky-header {
-      padding: 90px 15px 0 25px;
+      padding: 90px 15px 5px 25px;
     }
-  }
-
-  &__title-Hours {
-    font-size: 20px;
-    font-weight: 600;
-    text-align: start;
-    padding: 40px 15px 0 25px;
-    color: $color-dark;
   }
 
   &__title-Days {
     font-size: 20px;
     font-weight: 600;
     text-align: start;
-    padding: 30px 15px 5px 25px;
+    padding: 30px 15px 10px 25px;
     color: $color-dark;
   }
 
@@ -408,10 +408,11 @@ body {
     overflow-x: auto;
     align-items: start;
     justify-content: left;
-    padding: 10px 30px 0 30px;
-    margin: 10px 10px 0 10px;
-    height: 30%;
-    gap: 2.5rem;
+    padding: 1rem 0.5rem 0 0.5rem;
+    margin: 0 2rem 0 2rem;
+    min-height: max-content;
+    gap: 1.7rem;
+
     scrollbar-width: none;
   }
 
@@ -449,7 +450,7 @@ body {
     align-items: center;
     justify-content: start;
     height: 100%;
-    padding: 15px 15px 15px 15px;
+    padding: 5px 15px 15px 15px;
     gap: 15px;
   }
 
@@ -459,7 +460,7 @@ body {
     align-items: center;
     justify-content: start;
 
-    width: 100%;
+    max-width: 100%;
     padding: 10px 15px;
     border-radius: 10px;
   }
@@ -470,12 +471,17 @@ body {
     align-items: center;
     justify-content: start;
     gap: 1rem;
-    width: 90%;
-    padding: 1rem;
+    width: 85vw;
+    padding: 1rem 1.5rem 1rem 1rem;
     background-color: lightgray;
     border-radius: 20px 20px 0 0;
     color: #555555;
     font-weight: 600;
+    box-sizing: border-box; // Include padding in width
+
+    @include largeScreens {
+      width: 370px; // Same as body
+    }
   }
 
   &__dayHeader {
@@ -501,8 +507,8 @@ body {
     }
 
     &__tempRange {
-      font-size: 14px;
-      color: $color-dark;
+      font-size: 1rem;
+      color: $primary-color;
     }
 
     &__description {
@@ -514,23 +520,25 @@ body {
   &__dayItem-body {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 85vw;
     padding: 10px 0;
     scrollbar-width: none;
-    width: 360px;
     height: fit-content;
-
     border-radius: 0px 0px 25px 25px;
     border: lightgray 2px solid;
+    box-sizing: border-box;
+
+    @include largeScreens {
+      width: 370px;
+    }
   }
 
   &__body-details {
-    display: flex;
+    display: none;
     flex-direction: row;
     scrollbar-width: none;
     justify-content: space-around;
     align-items: center;
-    gap: 20px;
     padding: 10px 0 25px 0;
     width: 100%;
     color: #555555;
@@ -554,21 +562,38 @@ body {
     color: $color-dark;
   }
 
+  &__arrow-down-icon {
+    display: flex;
+    width: 25px;
+    filter: invert(40%);
+    align-self: center;
+    cursor: pointer;
+  }
+
+  &__arrow-up-icon {
+    display: none;
+    width: 25px;
+    filter: invert(40%);
+    align-self: center;
+    cursor: pointer;
+  }
+
   &__dayItem-body-divider {
-    width: 340px;
+    display: none;
     height: 1px;
     background-color: lightgray;
     margin: 0 10px;
   }
   &__hourlyItems {
-    display: flex;
+    display: none;
     flex-direction: row;
     overflow-x: auto;
     align-items: start;
     justify-content: left;
     height: fit-content;
-    padding: 25px 25px 10px 25px;
-    gap: 2.5rem;
+    padding: 1rem 1rem 0 1rem;
+    margin: 1rem;
+    gap: 1.8rem;
     scrollbar-width: none;
   }
 }
