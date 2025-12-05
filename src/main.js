@@ -19,7 +19,6 @@ async function init() {
       ".weather-forecast__container"
     );
 
-    // Get all arrow icons and bodies (multiple items)
     const arrowDownIcons = document.querySelectorAll(
       ".weather-forecast__arrow-down-icon"
     );
@@ -27,12 +26,6 @@ async function init() {
       ".weather-forecast__arrow-up-icon"
     );
 
-    console.log("Found arrows:", {
-      arrowDownIcons: arrowDownIcons.length,
-      arrowUpIcons: arrowUpIcons.length,
-    });
-
-    // Add event listeners to each arrow pair
     arrowUpIcons.forEach((arrowUpIcon, index) => {
       const arrowDownIcon = arrowDownIcons[index];
       const dayItem = arrowUpIcon.closest(".weather-forecast__dayItem-body");
@@ -46,21 +39,21 @@ async function init() {
         ".weather-forecast__dayItem-body-divider"
       );
 
-      console.log(`Arrow up ${index}:`, {
-        dayItem: !!dayItem,
-        bodyDetails: !!bodyDetails,
-        hourlyItems: !!hourlyItems,
-        divider: !!divider,
-        arrowDownIcon: !!arrowDownIcon,
-      });
-
       arrowUpIcon.addEventListener("click", () => {
         console.log(`Arrow up clicked ${index}`);
-        arrowUpIcon.style.display = "none";
-        if (arrowDownIcon) arrowDownIcon.style.display = "flex";
-        if (bodyDetails) bodyDetails.style.display = "none";
-        if (hourlyItems) hourlyItems.style.display = "none";
-        if (divider) divider.style.display = "none";
+
+        if (bodyDetails) bodyDetails.classList.remove("show");
+        if (hourlyItems) hourlyItems.classList.remove("show");
+        if (divider) divider.classList.remove("show");
+
+        setTimeout(() => {
+          arrowUpIcon.style.display = "none";
+          if (arrowDownIcon) arrowDownIcon.style.display = "flex";
+          if (bodyDetails) bodyDetails.style.display = "none";
+          if (hourlyItems) hourlyItems.style.display = "none";
+          if (divider) divider.style.display = "none";
+        }, 100);
+
         console.log("Body hidden");
       });
     });
@@ -78,24 +71,29 @@ async function init() {
         ".weather-forecast__dayItem-body-divider"
       );
 
-      console.log(`Arrow down ${index}:`, {
-        dayItem: !!dayItem,
-        bodyDetails: !!bodyDetails,
-        hourlyItems: !!hourlyItems,
-        divider: !!divider,
-        arrowUpIcon: !!arrowUpIcon,
-      });
-
       arrowDownIcon.addEventListener("click", () => {
         console.log(`Arrow down clicked ${index}`);
         arrowDownIcon.style.display = "none";
         if (arrowUpIcon) arrowUpIcon.style.display = "flex";
+
         if (bodyDetails) bodyDetails.style.display = "flex";
         if (hourlyItems) hourlyItems.style.display = "flex";
         if (divider) divider.style.display = "block";
+
+        setTimeout(() => {
+          if (bodyDetails) bodyDetails.classList.add("show");
+          if (hourlyItems) hourlyItems.classList.add("show");
+          if (divider) divider.classList.add("show");
+        }, 10);
+
         console.log("Body shown");
       });
     });
+
+    const menuButton = document.getElementById("menu");
+    const cancelButton = document.getElementById("cancel");
+    const favoriteButton = document.getElementById("favorite");
+    const arrowButton = document.getElementById("arrow");
 
     if (
       weatherMain &&
@@ -103,46 +101,81 @@ async function init() {
       weatherPanel &&
       weatherForecastTitle
     ) {
-      console.log("Setting up scroll listener...");
       weatherMain.addEventListener("scroll", () => {
-        console.log("Scroll detected, scrollTop:", weatherMain.scrollTop);
         if (weatherMain.scrollTop > 120) {
           weatherPanel.classList.add("sticky");
           weatherForecastContainer.classList.add("with-sticky-header");
           weatherForecastTitle.classList.add("with-sticky-header");
-          console.log("Added sticky class");
+
+          if (menuButton) menuButton.style.display = "none";
+          if (cancelButton) cancelButton.style.display = "none";
+          if (favoriteButton) favoriteButton.style.display = "none";
+          if (arrowButton) arrowButton.style.display = "none";
         } else {
           weatherPanel.classList.remove("sticky");
           weatherForecastContainer.classList.remove("with-sticky-header");
           weatherForecastTitle.classList.remove("with-sticky-header");
-          console.log("Removed sticky class");
+
+          if (menuButton) menuButton.style.display = "block";
+          if (cancelButton) cancelButton.style.display = "none";
+          if (favoriteButton) favoriteButton.style.display = "none";
+          if (arrowButton) arrowButton.style.display = "none";
         }
       });
-    } else {
-      console.error("Some sticky elements not found!");
     }
-
-    const menuButton = document.getElementById("menu");
-    const cancelButton = document.getElementById("cancel");
-    const favoriteButton = document.getElementById("favorite");
-    const arrowButton = document.getElementById("arrow");
+    // else {
+    //   console.error("Some sticky elements not found!");
+    // }
 
     if (menuButton) {
       menuButton.addEventListener("click", () => {
-        cancelButton.style.display = "block";
-        arrowButton.style.display = "block";
-        favoriteButton.style.display = "block";
-        menuButton.style.display = "none";
-        console.log("Menu button clicked");
+        if (weatherPanel.classList.contains("sticky")) {
+          return;
+        }
+
+        menuButton.style.transform = "rotate(90deg) scale(0.8)";
+        setTimeout(() => {
+          menuButton.style.display = "none";
+          menuButton.style.transform = "";
+
+          cancelButton.style.display = "block";
+          arrowButton.style.display = "block";
+          favoriteButton.style.display = "block";
+
+          cancelButton.style.opacity = "0";
+          arrowButton.style.opacity = "0";
+          favoriteButton.style.opacity = "0";
+
+          setTimeout(() => {
+            cancelButton.style.opacity = "1";
+          }, 50);
+          setTimeout(() => {
+            arrowButton.style.opacity = "1";
+          }, 100);
+          setTimeout(() => {
+            favoriteButton.style.opacity = "1";
+          }, 150);
+        }, 150);
       });
     }
 
     if (cancelButton) {
       cancelButton.addEventListener("click", () => {
-        menuButton.style.display = "block";
-        arrowButton.style.display = "none";
-        favoriteButton.style.display = "none";
-        cancelButton.style.display = "none";
+        cancelButton.style.transform = "rotate(90deg) scale(0.8)";
+
+        setTimeout(() => {
+          arrowButton.style.display = "none";
+          favoriteButton.style.display = "none";
+          cancelButton.style.display = "none";
+          cancelButton.style.transform = "";
+
+          menuButton.style.display = "block";
+          menuButton.style.opacity = "0";
+          setTimeout(() => {
+            menuButton.style.opacity = "1";
+          }, 50);
+        }, 150);
+
         console.log("Menu button clicked");
       });
     }

@@ -9,7 +9,7 @@ import { bodyDetails } from "./bodyDetails";
 
 export async function getOverview() {
   renderLoadingScreen();
-  const data = await getWeatherData("Ihringen");
+  const data = await getWeatherData("Greenville");
   const weatherData = {
     id: data.list[0].weather[0].id,
     dt: data.list[0].dt,

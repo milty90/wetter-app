@@ -129,7 +129,6 @@ body {
     }
     .weather-panel__options {
       display: flex;
-
       margin: 0;
 
       .weather-panel__menu-icon {
@@ -160,6 +159,10 @@ body {
       }
 
       #favorite {
+        display: none;
+      }
+
+      #menu {
         display: none;
       }
     }
@@ -256,7 +259,7 @@ body {
   &__min-max-temp {
     display: flex;
     gap: 10px;
-    padding: 15px 15px;
+    padding: 16px 16px;
     width: fit-content;
     font-weight: 700;
     font-size: 16px;
@@ -319,6 +322,44 @@ body {
   &__menu-icon {
     width: 30px;
     filter: invert(90%);
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55),
+      opacity 0.2s ease;
+    cursor: pointer;
+    opacity: 1;
+
+    &:hover {
+      transform: scale(1.1);
+      filter: invert(100%);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+
+    &#menu {
+      &:hover {
+        transform: rotate(90deg) scale(1.1);
+      }
+    }
+
+    &#cancel {
+      &:hover {
+        transform: rotate(90deg) scale(1.1);
+      }
+    }
+
+    &#favorite {
+      &:hover {
+        transform: scale(1.4);
+        filter: invert(60%) sepia(100%) saturate(500%) hue-rotate(320deg);
+      }
+    }
+
+    &#arrow {
+      &:hover {
+        transform: translateX(-8px) scale(1.4);
+      }
+    }
   }
 
   &__condition-text {
@@ -547,6 +588,15 @@ body {
     padding: 10px 0 25px 0;
     width: 100%;
     color: #555555;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+      transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
   &__body-detail-item {
     display: flex;
@@ -573,6 +623,16 @@ body {
     filter: invert(40%);
     align-self: center;
     cursor: pointer;
+    transition: transform 0.3s ease, filter 0.2s ease;
+
+    &:hover {
+      transform: translateY(3px) scale(1.1);
+      filter: invert(20%);
+    }
+
+    &:active {
+      transform: translateY(1px) scale(0.95);
+    }
   }
 
   &__arrow-up-icon {
@@ -581,6 +641,16 @@ body {
     filter: invert(40%);
     align-self: center;
     cursor: pointer;
+    transition: transform 0.2s ease-in, filter 0.2s ease-in;
+
+    &:hover {
+      transform: translateY(-3px) scale(1.1);
+      filter: invert(20%);
+    }
+
+    &:active {
+      transform: translateY(-1px) scale(0.95);
+    }
   }
 
   &__dayItem-body-divider {
@@ -588,6 +658,15 @@ body {
     height: 1px;
     background-color: lightgray;
     margin: 0 10px;
+    opacity: 0;
+    transform: scaleX(0);
+    transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0.04s,
+      transform 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0.04s;
+
+    &.show {
+      opacity: 1;
+      transform: scaleX(1);
+    }
   }
   &__hourlyItems {
     display: none;
@@ -600,5 +679,14 @@ body {
     margin: 1rem;
     gap: 1.8rem;
     scrollbar-width: none;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0.04s,
+      transform 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0.04s;
+
+    &.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 }
