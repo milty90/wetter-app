@@ -70,5 +70,5 @@ export function setBackground(weatherId, timestamp, sys) {
     } else {
       console.error("weather-main element not found!");
     }
-  }, 100);
+  }, 200);
 }

@@ -1,0 +1,256 @@
+@use "variables" as *;
+@import "../styles/mixins";
+
+.menu-main {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+
+  overflow: auto;
+  background-color: #101010;
+  color: $color-light;
+  font-family: $font-quicksand;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  @include largeScreens {
+    height: 900px;
+    width: 400px;
+    min-height: unset;
+    overflow: auto;
+  }
+}
+
+.menu-head {
+  display: flex;
+  flex-direction: row;
+  align-items: self-start;
+  padding: 20px 40px 0px 20px;
+  gap: 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.menu-logo {
+  width: 50px;
+  height: 50px;
+  filter: brightness(0) saturate(100%) invert(61%) sepia(33%) saturate(4995%)
+    hue-rotate(331deg) brightness(98%) contrast(87%);
+}
+
+.menu-title {
+  font-size: 32px;
+  font-weight: bold;
+  margin: 0;
+  color: $color-light;
+}
+
+.menu-divider {
+  width: 100%;
+  text-align: center;
+  justify-items: flex-start;
+  margin: 15px 40px;
+}
+
+.menu-subtitle {
+  font-size: 16px;
+  font-weight: 200;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+}
+
+.menu-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  padding: 10px;
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  overflow-y: auto;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.menu-item {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  justify-content: space-between;
+  align-items: center;
+  margin: 16px;
+  padding: 15px;
+  border: 2px solid #3e3e3e;
+  color: $color-light;
+  height: fit-content;
+  width: 90vw;
+  max-width: 330px;
+  box-sizing: border-box;
+  background-size: cover;
+  background-position: center;
+  box-shadow: rgba(49, 49, 49, 0.56) 0px 22px 70px 4px;
+  // box-shadow: $color-dark 0px 0px 0px 2px, $color-dark 0px 4px 6px -1px,
+  //   rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+  border-radius: 100px;
+  text-align: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 0;
+    border-radius: 8px;
+    pointer-events: none;
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  &:hover {
+    &::before {
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  @include largeScreens {
+    margin: 20px;
+    padding: 20px;
+  }
+
+  &__left,
+  &__right,
+  &__center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  &__center-top {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__icon {
+    background-color: rgba(211, 211, 211, 0.5);
+    border-radius: 25px;
+    width: 50px;
+    height: 50px;
+  }
+
+  &__location {
+    font-size: 20px;
+    font-weight: bold;
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+  }
+
+  &__country {
+    font-size: 12px;
+    font-weight: 300;
+  }
+
+  &__condition {
+    font-size: 14px;
+    font-weight: 500;
+    margin: 15px 0 0 0;
+  }
+
+  &__temp {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0 10px 0 0;
+  }
+}
+
+.search-container {
+  display: flex;
+  right: 20px;
+  bottom: 20px;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+  z-index: 1;
+
+  &__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $primary-color;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  &__button:hover {
+    background-color: darken($primary-color, 10%);
+  }
+
+  &__icon {
+    width: 24px;
+    height: 24px;
+    filter: invert(100%) sepia(50%) saturate(200%) hue-rotate(100deg)
+      brightness(100%) contrast(95%);
+  }
+}
+
+.search-input.active {
+  width: 250px;
+  padding: 8px 12px;
+  border-bottom: 2px solid var(--gray40);
+  opacity: 1;
+  pointer-events: all;
+  margin-right: 10px;
+}
+
+.search-input::placeholder {
+  color: #999;
+}
+
+.search-toggle {
+  position: relative;
+  z-index: 10;
+}
+
+.search-icon {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  filter: invert(60%) sepia(10%) saturate(500%) hue-rotate(180deg)
+    brightness(90%) contrast(85%);
+  transition: transform 0.1s ease;
+}
+
+.search-icon:hover {
+  transform: scale(1.1);
+}
+
+.search-input.active:focus {
+  border-bottom-color: var(--gray20);
+}

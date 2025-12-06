@@ -1,5 +1,6 @@
 @use "variables" as *;
 @import "../styles/mixins";
+@import "/styles/menustyle.scss";
 
 * {
   padding: 0;
@@ -110,7 +111,7 @@ body {
 
     .weather-panel__min-max-temp,
     .weather-panel__sunrise-sunset {
-      display: none; // Hide extra details
+      display: none;
     }
 
     .weather-panel__temp-container {
@@ -119,7 +120,7 @@ body {
       align-items: flex-start;
 
       .weather-panel__temperature {
-        font-size: 35px !important; // Smaller temperature
+        font-size: 35px !important;
       }
       .weather-panel__temperature-unit {
         font-size: 15px !important;
@@ -198,6 +199,10 @@ body {
     &__location {
       font-size: 22px;
       font-weight: bold;
+      max-width: 200px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
     }
   }
 

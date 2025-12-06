@@ -1,11 +1,16 @@
 import "/styles/style.scss";
 import "/src/wetterApi.js";
-import { getOverview } from "./WeatherOverview";
+import { getWeatherOverview } from "./WeatherOverview";
+import { getMenuOverview } from "./menuOverview";
 import { setBackground } from "./backgroundManager";
+import { saveCityInLocalState } from "./localStateManager";
 
 async function init() {
-  const { html, weatherData } = await getOverview();
-  document.querySelector("#app").innerHTML = html;
+  const { html, weatherData } = await getWeatherOverview();
+  const menuHtml = await getMenuOverview();
+
+  document.querySelector("#app").innerHTML = menuHtml;
+  //document.querySelector("#app").innerHTML = html;
 
   setBackground(weatherData.id, weatherData.dt, weatherData.sys);
 
@@ -123,9 +128,6 @@ async function init() {
         }
       });
     }
-    // else {
-    //   console.error("Some sticky elements not found!");
-    // }
 
     if (menuButton) {
       menuButton.addEventListener("click", () => {
@@ -182,6 +184,11 @@ async function init() {
 
     if (favoriteButton) {
       favoriteButton.addEventListener("click", () => {
+        if (!weatherData.city) {
+          alert("No city data available to save.");
+          return;
+        }
+        saveCityInLocalState(weatherData.city.name);
         console.log("Favorite button clicked");
       });
     }
