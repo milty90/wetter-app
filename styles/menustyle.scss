@@ -8,7 +8,7 @@
   width: 100%;
 
   overflow: auto;
-  background-color: #101010;
+  background: $linear-gradient-dark;
   color: $color-light;
   font-family: $font-quicksand;
 
@@ -49,17 +49,29 @@
 }
 
 .menu-divider {
-  width: 100%;
+  display: flex;
+  flex-direction: row;
   text-align: center;
-  justify-items: flex-start;
+  align-items: center;
+  justify-content: space-between;
   margin: 15px 40px;
-}
 
-.menu-subtitle {
-  font-size: 16px;
-  font-weight: 200;
-  color: rgba(255, 255, 255, 0.8);
-  margin: 0;
+  &__subtitle {
+    font-size: 16px;
+    font-weight: 200;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+  }
+
+  &__button {
+    font-size: 16px;
+    font-weight: 700;
+    color: $primary-color;
+    font-family: $font-quicksand;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
 }
 
 .menu-body {
@@ -91,13 +103,10 @@
   color: $color-light;
   height: fit-content;
   width: 90vw;
-  max-width: 330px;
   box-sizing: border-box;
   background-size: cover;
   background-position: center;
   box-shadow: rgba(49, 49, 49, 0.56) 0px 22px 70px 4px;
-  // box-shadow: $color-dark 0px 0px 0px 2px, $color-dark 0px 4px 6px -1px,
-  //   rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
   border-radius: 100px;
   text-align: center;
   background-repeat: no-repeat;
@@ -134,7 +143,19 @@
     padding: 20px;
   }
 
-  &__left,
+  &__left-side {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+  }
+
+  &__center {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+  }
   &__right,
   &__center {
     display: flex;
@@ -151,6 +172,15 @@
     justify-content: center;
   }
 
+  &__center-bottom {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+    align-items: start;
+    justify-content: center;
+  }
+
   &__icon {
     background-color: rgba(211, 211, 211, 0.5);
     border-radius: 25px;
@@ -158,10 +188,20 @@
     height: 50px;
   }
 
+  &__delete-icon {
+    display: none;
+    filter: invert(30%) sepia(90%) saturate(4000%) hue-rotate(350deg)
+      brightness(90%) contrast(90%);
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    z-index: 2;
+  }
+
   &__location {
     font-size: 20px;
     font-weight: bold;
-    max-width: 200px;
+    max-width: 150px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -176,7 +216,7 @@
   &__condition {
     font-size: 14px;
     font-weight: 500;
-    margin: 15px 0 0 0;
+    margin: 12px 0 0 0;
   }
 
   &__temp {
@@ -209,7 +249,7 @@
   }
 
   &__button:hover {
-    background-color: darken($primary-color, 10%);
+    background-color: darken($primary-color, 5%);
   }
 
   &__icon {
@@ -218,39 +258,4 @@
     filter: invert(100%) sepia(50%) saturate(200%) hue-rotate(100deg)
       brightness(100%) contrast(95%);
   }
-}
-
-.search-input.active {
-  width: 250px;
-  padding: 8px 12px;
-  border-bottom: 2px solid var(--gray40);
-  opacity: 1;
-  pointer-events: all;
-  margin-right: 10px;
-}
-
-.search-input::placeholder {
-  color: #999;
-}
-
-.search-toggle {
-  position: relative;
-  z-index: 10;
-}
-
-.search-icon {
-  width: 24px;
-  height: 24px;
-  cursor: pointer;
-  filter: invert(60%) sepia(10%) saturate(500%) hue-rotate(180deg)
-    brightness(90%) contrast(85%);
-  transition: transform 0.1s ease;
-}
-
-.search-icon:hover {
-  transform: scale(1.1);
-}
-
-.search-input.active:focus {
-  border-bottom-color: var(--gray20);
 }

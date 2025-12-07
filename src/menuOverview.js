@@ -23,7 +23,8 @@ export async function getMenuOverview() {
 
       cards.push(
         cardItem(
-          data.city.name,
+          city, // Az eredeti városnév a localStorage-ból
+          data.city.name, // Az API által visszaadott formázott név
           data.list[0].weather[0].description,
           data.city.country,
           Math.round(data.list[0].main.temp),
@@ -44,7 +45,8 @@ export function menuOverview(cardsHtml) {
     <h1 class="menu-title">WETTER</h1>
   </div>
   <div class="menu-divider">
-    <p class="menu-subtitle">Deine gespeicherten Städte</p>
+    <p class="menu-divider__subtitle">Deine gespeicherten Städte</p>
+    <button class="menu-divider__button"> Bearbeiten </button>
     </div>
   <div class="menu-body"> 
     <div class="menu-body__list">
@@ -56,11 +58,15 @@ export function menuOverview(cardsHtml) {
 </div>`;
 }
 
-function cardItem(city, condition, country, temp, icon, bgImage) {
+function cardItem(originalCity, city, condition, country, temp, icon, bgImage) {
   return `
-  <div class="menu-item" style="background-image: url('${bgImage}'); background-size: cover; background-position: center;">
-    <div class="menu-item__left">
+  <div class="menu-item" data-city="${originalCity}" style="background-image: url('${bgImage}'); background-size: cover; background-position: center;">
+    <div class="menu-item__left-side">
+  <div class="menu-item__left">
        <img class="menu-item__icon" src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="Weather Icon">
+       <div class="menu-item__delete-button">
+        <img class="menu-item__delete-icon" src="public/do-not-enter.svg" alt="Delete Icon">
+        </div>
    </div>
      <div class="menu-item__center">
       <div class="menu-item__center-top">
@@ -70,6 +76,7 @@ function cardItem(city, condition, country, temp, icon, bgImage) {
        <div class="menu-item__center-bottom">
          <p class="menu-item__condition">${condition}</p>
       </div>
+    </div>
     </div>
    <div class="menu-item__right">
      <p class="menu-item__temp">${temp}°C</p>
