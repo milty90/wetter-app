@@ -45,7 +45,7 @@ export function menuOverview(cardsHtml) {
     <h1 class="menu-title">WETTER</h1>
   </div>
   <div class="menu-divider">
-    <p class="menu-divider__subtitle">Deine gespeicherten Städte</p>
+    <p class="menu-divider__subtitle">Deine gespeicherten Orte</p>
     <button class="menu-divider__button"> Bearbeiten </button>
     </div>
   <div class="menu-body"> 

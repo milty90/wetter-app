@@ -229,7 +229,7 @@
   &__temp {
     font-size: 24px;
     font-weight: bold;
-    margin: 0 10px 0 0;
+    margin: 0 5px 0 0;
   }
 }
 
@@ -247,7 +247,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: darken($primary-color, 10%);
+    background-color: $color-light;
     border-radius: 50%;
     width: 50px;
     height: 50px;
@@ -259,22 +259,22 @@
   }
 
   &__button:hover {
-    background-color: $color-light;
+    background-color: $primary-color;
     transform: rotateY(180deg);
   }
 
   &__icon {
     width: 24px;
     height: 24px;
-    filter: invert(100%) sepia(50%) saturate(200%) hue-rotate(100deg)
-      brightness(100%) contrast(95%);
+    filter: brightness(0) saturate(100%) invert(49%) sepia(55%) saturate(680%)
+      hue-rotate(325deg) brightness(99%) contrast(86%);
     transition: all 0.3s ease;
   }
 
   &__button:hover &__icon,
   &__icon:hover {
     transform: scale(1.1);
-    filter: brightness(0) saturate(100%) invert(49%) sepia(55%) saturate(680%)
-      hue-rotate(325deg) brightness(99%) contrast(86%);
+    filter: invert(100%) sepia(50%) saturate(200%) hue-rotate(100deg)
+      brightness(100%) contrast(95%);
   }
 }
