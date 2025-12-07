@@ -103,6 +103,7 @@ function setupEventListeners() {
   const menuItem = document.querySelectorAll(".menu-item");
   const menuItemIcons = document.querySelectorAll(".menu-item__icon");
   const deleteIcons = document.querySelectorAll(".menu-item__delete-icon");
+  const searchItem = document.querySelector(".search-container__icon");
 
   if (
     weatherMain &&
@@ -258,6 +259,12 @@ function setupEventListeners() {
           setTimeout(() => setupEventListeners(), 200);
         });
       });
+    });
+  }
+
+  if (searchItem) {
+    searchItem.addEventListener("click", () => {
+      saveCityInLocalState("Ihringen");
     });
   }
 }
