@@ -8,7 +8,7 @@ import { dayFormatter } from "./dateFormatter";
 import { bodyDetails } from "./bodyDetails";
 
 export async function getWeatherOverview(city) {
-  renderLoadingScreen();
+  renderLoadingScreen(city);
   const data = await getWeatherData(city);
   const weatherData = {
     city: data.city,

@@ -28,3 +28,24 @@ export function timeFormatter(timestamp) {
   const minutes = date.getMinutes().toString().padStart(2, "0");
   return `${hours}:${minutes}`;
 }
+
+export function cityNameCutter(city) {
+  if (!city.includes(" ")) {
+    return city;
+  }
+
+  const words = city.split(" ");
+  const result = [];
+
+  for (let i = 0; i < words.length; i++) {
+    const firstChar = words[i][0];
+
+    if (firstChar === firstChar.toUpperCase() && result.length < 2) {
+      result.push(words[i]);
+    } else {
+      break;
+    }
+  }
+
+  return result.join(" ");
+}

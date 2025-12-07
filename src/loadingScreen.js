@@ -1,8 +1,10 @@
-export function renderLoadingScreen() {
-  document.querySelector("#app").innerHTML = loadingScreen();
+import { cityNameCutter } from "./dateFormatter";
+
+export function renderLoadingScreen(city) {
+  document.querySelector("#app").innerHTML = loadingScreen(city);
 }
 
-export function loadingScreen() {
+export function loadingScreen(city) {
   return `<div class="loading">
         <div class="loader">
           <svg
@@ -71,6 +73,12 @@ export function loadingScreen() {
             ></rect>
           </svg>
         </div>
-        <div class="loading__text">Wetterdaten werden geladen...</div>
+        ${
+          city
+            ? `<div class="loading__text">Wetterdaten werden geladen für ${cityNameCutter(
+                city
+              )}...</div>`
+            : '<div class="loading__text">Wetterdaten werden geladen...</div>'
+        }
       </div>`;
 }

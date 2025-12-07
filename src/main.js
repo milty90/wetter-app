@@ -48,8 +48,6 @@ function setupEventListeners() {
       );
 
       arrowUpIcon.addEventListener("click", () => {
-        console.log(`Arrow up clicked ${index}`);
-
         if (bodyDetails) bodyDetails.classList.remove("show");
         if (hourlyItems) hourlyItems.classList.remove("show");
         if (divider) divider.classList.remove("show");
@@ -61,8 +59,6 @@ function setupEventListeners() {
           if (hourlyItems) hourlyItems.style.display = "none";
           if (divider) divider.style.display = "none";
         }, 100);
-
-        console.log("Body hidden");
       });
     });
   }
@@ -83,8 +79,6 @@ function setupEventListeners() {
       );
 
       arrowDownIcon.addEventListener("click", () => {
-        console.log(`Arrow down clicked ${index}`);
-
         arrowDownIcon.style.display = "none";
         if (arrowUpIcon) arrowUpIcon.style.display = "flex";
 
@@ -97,8 +91,6 @@ function setupEventListeners() {
           if (hourlyItems) hourlyItems.classList.add("show");
           if (divider) divider.classList.add("show");
         }, 10);
-
-        console.log("Body shown");
       });
     });
   }
@@ -170,31 +162,6 @@ function setupEventListeners() {
           favoriteButton.style.opacity = "1";
         }, 150);
       }, 150);
-
-      // menuButton.style.transform = "rotate(90deg) scale(0.8)";
-      // setTimeout(() => {
-      //   menuButton.style.display = "none";
-      //   menuButton.style.transform = "";
-
-      //   cancelButton.style.display = "block";
-      //   arrowButton.style.display = "block";
-      //   favoriteButton.style.display = "block";
-
-      //   cancelButton.style.opacity = "0";
-      //   arrowButton.style.opacity = "0";
-      //   favoriteButton.style.opacity = "0";
-
-      //   setTimeout(() => {
-      //     cancelButton.style.opacity = "1";
-      //   }, 50);
-      //   setTimeout(() => {
-      //     arrowButton.style.opacity = "1";
-      //   }, 100);
-      //   setTimeout(() => {
-      //     favoriteButton.style.opacity = "1";
-      //   }, 150);
-
-      // }, 150);
     });
   }
 
@@ -214,19 +181,18 @@ function setupEventListeners() {
           menuButton.style.opacity = "1";
         }, 50);
       }, 150);
-
-      console.log("Menu button clicked");
     });
   }
 
   if (favoriteButton) {
     favoriteButton.addEventListener("click", () => {
+      const weatherData = window.currentWeatherData;
       if (!weatherData.city) {
         alert("No city data available to save.");
         return;
       } else {
         saveCityInLocalState(weatherData.city.name);
-        console.log("Favorite button clicked");
+        alert(`Stadt ${weatherData.city.name} wurde zu Favoriten hinzugefügt!`);
       }
     });
   }
@@ -244,19 +210,15 @@ function setupEventListeners() {
 
     editButton.addEventListener("click", () => {
       if (!isEditing) {
-        //Switch to edit mode
         menuItemIcons.forEach((icon) => {
           icon.style.display = "none";
         });
         deleteIcons.forEach((deleteIcon) => {
           deleteIcon.style.display = "block";
         });
-        // document.querySelector(".menu-main").classList.toggle("edit-mode");
-
         editButton.textContent = "Fertig";
         isEditing = true;
       } else {
-        // Switch back to normal mode
         menuItemIcons.forEach((icon) => {
           icon.style.display = "block";
         });
@@ -279,8 +241,6 @@ function setupEventListeners() {
 
         deleteSavedCity(cityName);
         menuItem.remove();
-
-        console.log(`Deleted city: ${cityName}`);
       });
     });
   }
@@ -295,7 +255,6 @@ function setupEventListeners() {
           document.querySelector("#app").innerHTML = html;
           setBackground(weatherData.id, weatherData.dt, weatherData.sys);
 
-          // Re-setup event listeners for the new content
           setTimeout(() => setupEventListeners(), 200);
         });
       });

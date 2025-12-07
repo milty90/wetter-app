@@ -1,5 +1,3 @@
-import { bodyDetails } from "./bodyDetails";
-
 export function forecastItem(icon, time, temp) {
   return `
     <div class="weather-forecast__item">

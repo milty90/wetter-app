@@ -1,4 +1,4 @@
-import { dateFormatter, timeFormatter } from "./dateFormatter";
+import { dateFormatter, timeFormatter, cityNameCutter } from "./dateFormatter";
 
 export function panelOverview(
   city,
@@ -18,7 +18,9 @@ export function panelOverview(
             src="/location-pin.svg"
             alt="Location Icon"
           />
-          <p class="weather-panel__header__location">${city}, ${country}</p>
+          <p class="weather-panel__header__location">${cityNameCutter(
+            city
+          )}, ${country}</p>
         </div>
         <p class="weather-panel__current-date">${dateFormatter(dt)}</p>
         <div class="weather-panel__temp-container">

@@ -151,6 +151,12 @@
     gap: 15px;
   }
 
+  &__left-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
   &__center {
     display: flex;
     flex-direction: column;
@@ -241,16 +247,20 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: $primary-color;
+    background-color: darken($primary-color, 10%);
     border-radius: 50%;
     width: 50px;
     height: 50px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+      rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
+      rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
   }
 
   &__button:hover {
-    background-color: darken($primary-color, 5%);
+    background-color: $color-light;
+    transform: rotateY(180deg);
   }
 
   &__icon {
@@ -258,5 +268,13 @@
     height: 24px;
     filter: invert(100%) sepia(50%) saturate(200%) hue-rotate(100deg)
       brightness(100%) contrast(95%);
+    transition: all 0.3s ease;
+  }
+
+  &__button:hover &__icon,
+  &__icon:hover {
+    transform: scale(1.1);
+    filter: brightness(0) saturate(100%) invert(49%) sepia(55%) saturate(680%)
+      hue-rotate(325deg) brightness(99%) contrast(86%);
   }
 }

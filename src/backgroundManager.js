@@ -16,13 +16,11 @@ export function getBackgroundImage(weatherId, timestamp, sys) {
   else if (weatherId > 802) weather = "overcast";
 
   const imagePath = `/backgrounds/${timeOfDay}_${weather}.jpg`;
-  console.log("Generated image path:", imagePath);
   return imagePath;
 }
 
 export function setBackground(weatherId, timestamp, sys) {
   const bgImage = getBackgroundImage(weatherId, timestamp, sys);
-  console.log("Setting background to:", bgImage);
   console.log("weatherId:", weatherId, "isDay:", sys === "d");
 
   const isDay = sys === "d";
@@ -37,13 +35,6 @@ export function setBackground(weatherId, timestamp, sys) {
     const condition_text = document.querySelector(
       ".weather-panel__condition-text"
     );
-
-    console.log("Elements found:", {
-      weatherMain: !!weatherMain,
-      location: !!location,
-      current_date: !!current_date,
-      condition_text: !!condition_text,
-    });
 
     if (weatherMain) {
       weatherMain.style.setProperty("--bg-image", `url('${bgImage}')`);
@@ -65,8 +56,6 @@ export function setBackground(weatherId, timestamp, sys) {
           location.style.color = "rgba(0, 0, 0, 0.8)";
         }
       }
-
-      console.log("Background set successfully");
     } else {
       console.error("weather-main element not found!");
     }
