@@ -41,7 +41,7 @@ export async function getMenuOverview() {
 export function menuOverview(cardsHtml) {
   return `<div class="menu-main">
   <div class="menu-head">
-  <img class="menu-logo" src="public/weather-icons/few-clouds.svg" alt="Logo"/>
+  <img class="menu-logo" src="/weather-icons/few-clouds.svg" alt="Logo"/>
     <h1 class="menu-title">WETTER</h1>
   </div>
   <div class="menu-divider">
@@ -65,7 +65,7 @@ function cardItem(originalCity, city, condition, country, temp, icon, bgImage) {
   <div class="menu-item__left">
        <img class="menu-item__icon" src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="Weather Icon">
        <div class="menu-item__delete-button">
-        <img class="menu-item__delete-icon" src="public/do-not-enter.svg" alt="Delete Icon">
+        <img class="menu-item__delete-icon" src="/do-not-enter.svg" alt="Delete Icon">
         </div>
    </div>
      <div class="menu-item__center">
@@ -88,7 +88,7 @@ function searchItem() {
   return `
       <div class="search-container">
         <div class="search-container__button">
-          <img src="public/search.svg" alt="Search" class="search-container__icon"/>
+          <img src="/search.svg" alt="Search" class="search-container__icon"/>
         </div>
       </div>`;
 }
