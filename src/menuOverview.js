@@ -1,7 +1,9 @@
 import { getBackgroundImage } from "./backgroundManager";
+import { cityNameCutter } from "./dateFormatter";
 import { renderLoadingScreen } from "./loadingScreen";
 import { getSavedCities } from "./localStateManager";
 import { getWeatherData } from "./wetterApi";
+import { locationFormatter } from "./dateFormatter";
 
 export async function getMenuOverview() {
   renderLoadingScreen();
@@ -10,7 +12,9 @@ export async function getMenuOverview() {
   const cards = [];
 
   for (let city of cities) {
-    const data = await getWeatherData(city);
+    const { city: cityName, country } = locationFormatter(city);
+
+    const data = await getWeatherData(cityName, country);
 
     console.log("Menu Overview Data for city:", city, data);
 
@@ -70,7 +74,7 @@ function cardItem(originalCity, city, condition, country, temp, icon, bgImage) {
    </div>
      <div class="menu-item__center">
       <div class="menu-item__center-top">
-       <h2 class="menu-item__location">${city}</h2>
+       <h2 class="menu-item__location">${cityNameCutter(city)}</h2>
          <p class="menu-item__country">${country}</p>
        </div>
        <div class="menu-item__center-bottom">

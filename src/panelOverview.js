@@ -14,11 +14,11 @@ export function panelOverview(
   return `<div class="weather-panel__overview">
         <div class="weather-panel__header">
           <img
-            class="weather-panel__header__location-icon"
+            class="weather-panel__header-location-icon"
             src="/location-pin.svg"
             alt="Location Icon"
           />
-          <p class="weather-panel__header__location">${cityNameCutter(
+          <p class="weather-panel__header-location">${cityNameCutter(
             city
           )}, ${country}</p>
         </div>

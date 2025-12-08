@@ -1,10 +1,11 @@
 import "/styles/style.scss";
 import "/src/wetterApi.js";
-import { getWeatherOverview } from "./WeatherOverview";
+import { getWeatherOverview } from "./weatherOverview";
 import { getMenuOverview } from "./menuOverview";
 import { setBackground } from "./backgroundManager";
 import { saveCityInLocalState } from "./localStateManager";
 import { deleteSavedCity } from "./localStateManager";
+import { searchView } from "./searchView";
 
 async function init() {
   const menuHtml = await getMenuOverview();
@@ -104,6 +105,9 @@ function setupEventListeners() {
   const menuItemIcons = document.querySelectorAll(".menu-item__icon");
   const deleteIcons = document.querySelectorAll(".menu-item__delete-icon");
   const searchItem = document.querySelector(".search-container__icon");
+  const city = document.querySelector(".weather-panel__header-location");
+  const searchViewInput = document.querySelector(".search-view__input");
+  const searchViewButton = document.querySelector(".search-view__button");
 
   if (
     weatherMain &&
@@ -187,14 +191,11 @@ function setupEventListeners() {
 
   if (favoriteButton) {
     favoriteButton.addEventListener("click", () => {
-      const weatherData = window.currentWeatherData;
-      if (!weatherData.city) {
-        alert("No city data available to save.");
-        return;
-      } else {
-        saveCityInLocalState(weatherData.city.name);
-        alert(`Stadt ${weatherData.city.name} wurde zu Favoriten hinzugefügt!`);
-      }
+      const cityName = city.textContent;
+      console.log("Favorisieren:", cityName);
+      saveCityInLocalState(cityName);
+      document.querySelector("#app").innerHTML = menuHtml;
+      setTimeout(() => setupEventListeners(), 200);
     });
   }
 
@@ -251,20 +252,45 @@ function setupEventListeners() {
       item.addEventListener("click", () => {
         const locationElement = item.querySelector(".menu-item__location");
         const cityName = locationElement.textContent;
+        const countryElement = item.querySelector(".menu-item__country");
+        const countryCode = countryElement.textContent;
 
-        getWeatherOverview(cityName).then(({ html, weatherData }) => {
-          document.querySelector("#app").innerHTML = html;
-          setBackground(weatherData.id, weatherData.dt, weatherData.sys);
+        console.log("Gewählte Stadt:", cityName, countryCode);
 
-          setTimeout(() => setupEventListeners(), 200);
-        });
+        getWeatherOverview(cityName, countryCode).then(
+          ({ html, weatherData }) => {
+            document.querySelector("#app").innerHTML = html;
+            setBackground(weatherData.id, weatherData.dt, weatherData.sys);
+
+            setTimeout(() => setupEventListeners(), 200);
+          }
+        );
       });
     });
   }
 
   if (searchItem) {
     searchItem.addEventListener("click", () => {
-      saveCityInLocalState("Ihringen");
+      document.querySelector("#app").innerHTML = searchView();
+
+      setTimeout(() => {
+        setupEventListeners();
+      }, 200);
+    });
+  }
+  if (searchViewButton) {
+    searchViewButton.addEventListener("click", () => {
+      const city = searchViewInput.value;
+      if (city) {
+        getWeatherOverview(city).then(({ html, weatherData }) => {
+          document.querySelector("#app").innerHTML = html;
+          setBackground(weatherData.id, weatherData.dt, weatherData.sys);
+
+          setTimeout(() => setupEventListeners(), 200);
+        });
+      } else {
+        alert("Bitte gib einen gültigen Stadtnamen ein.");
+      }
     });
   }
 }

@@ -163,8 +163,8 @@
     align-items: start;
     justify-content: start;
   }
-  &__right,
-  &__center {
+
+  &__right {
     display: flex;
     flex-direction: column;
     align-items: center;

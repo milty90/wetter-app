@@ -7,9 +7,9 @@ import { renderLoadingScreen } from "./loadingScreen";
 import { dayFormatter } from "./dateFormatter";
 import { bodyDetails } from "./bodyDetails";
 
-export async function getWeatherOverview(city) {
+export async function getWeatherOverview(city, country) {
   renderLoadingScreen(city);
-  const data = await getWeatherData(city);
+  const data = await getWeatherData(city, country);
   const weatherData = {
     city: data.city,
     id: data.list[0].weather[0].id,

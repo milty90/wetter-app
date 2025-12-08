@@ -49,3 +49,10 @@ export function cityNameCutter(city) {
 
   return result.join(" ");
 }
+
+export function locationFormatter(location) {
+  const parts = location.split(",");
+  const city = parts[0].trim();
+  const country = parts[1] ? parts[1].trim() : "";
+  return { city, country };
+}
