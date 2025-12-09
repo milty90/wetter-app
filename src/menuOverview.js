@@ -83,7 +83,8 @@ function cardItem(originalCity, city, condition, country, temp, icon, bgImage) {
     </div>
     </div>
    <div class="menu-item__right">
-     <p class="menu-item__temp">${temp}°C</p>
+     <p class="menu-item__temp">${temp}</p>
+      <p class="menu-item__temp-unit">°C</p>
    </div>
 </div>`;
 }
