@@ -28,9 +28,9 @@ export function setBackground(weatherId, timestamp, sys) {
   setTimeout(() => {
     const weatherMain = document.querySelector(".weather-main");
     const locationIcon = document.querySelector(
-      ".weather-panel__header__location-icon"
+      ".weather-panel__header-location-icon"
     );
-    const location = document.querySelector(".weather-panel__header__location");
+    const location = document.querySelector(".weather-panel__header-location");
     const current_date = document.querySelector(".weather-panel__current-date");
     const condition_text = document.querySelector(
       ".weather-panel__condition-text"
@@ -46,9 +46,9 @@ export function setBackground(weatherId, timestamp, sys) {
           locationIcon.style.filter = "invert(90%) ";
         }
         if (location) {
-          location.style.color = "rgba(255, 255, 255, 0.8)";
+          location.style.color = "rgba(255, 255, 255, 0.9)";
         }
-      } else {
+      } else if (!isDay) {
         if (locationIcon) {
           locationIcon.style.filter = "invert(10%)";
         }
