@@ -5,7 +5,7 @@ import { getMenuOverview } from "./menuOverview";
 import { setBackground } from "./backgroundManager";
 import { saveCityInLocalState } from "./localStateManager";
 import { deleteSavedCity } from "./localStateManager";
-import { searchView } from "./searchView";
+import { searchView } from "./searchView.js";
 
 async function init() {
   const menuHtml = await getMenuOverview();
