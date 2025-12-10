@@ -1,19 +1,21 @@
 export function searchView() {
   return `
-    <div class="search-view">
-    <div class="search-view__header">
-    <img
-        class="search-view__header-back-icon" style="cursor: pointer; width: 40px; height: 40px;"
-      src="/arrow-left.svg"
-      alt="Back Icon">
-      <h2 class="search-view__title">Gib den Namen der Stadt ein:</h2>
+    <div class="modal-overlay" id="searchModal">
+      <div class="modal-content">
+        <button class="modal-close" id="closeSearchModal">&times;</button>
+        <div class="search-view">
+          <h2 class="search-view__title">Stadt suchen</h2>
+          <input 
+            type="text" 
+            class="search-view__input" 
+            placeholder="Stadt eingeben..."
+            id="searchInput"
+          />
+          <div class="search-view__results" id="searchResults">
+            <!-- Hier werden die Suchergebnisse angezeigt -->
+          </div>
+        </div>
+      </div>
     </div>
-      <input
-        type="text"
-        class="search-view__input"
-        placeholder="Gib den Namen der Stadt ein..."
-      />
-      <button class="search-view__button">Suchen</button>
-</div>
   `;
 }

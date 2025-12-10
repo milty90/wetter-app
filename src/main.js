@@ -6,6 +6,7 @@ import { setBackground } from "./backgroundManager";
 import { saveCityInLocalState } from "./localStateManager";
 import { deleteSavedCity } from "./localStateManager";
 import { searchView } from "./searchView.js";
+import { searchCities } from "./wetterApi.js";
 
 async function init() {
   const menuHtml = await getMenuOverview();
@@ -104,10 +105,8 @@ function setupEventListeners() {
   const menuItem = document.querySelectorAll(".menu-item");
   const menuItemIcons = document.querySelectorAll(".menu-item__icon");
   const deleteIcons = document.querySelectorAll(".menu-item__delete-icon");
-  const searchItem = document.querySelector(".search-container__icon");
+  const searchButton = document.querySelector(".search-container__button");
   const city = document.querySelector(".weather-panel__header-location");
-  const searchViewInput = document.querySelector(".search-view__input");
-  const searchViewButton = document.querySelector(".search-view__button");
 
   if (
     weatherMain &&
@@ -269,30 +268,123 @@ function setupEventListeners() {
     });
   }
 
-  if (searchItem) {
-    searchItem.addEventListener("click", () => {
-      document.querySelector("#app").innerHTML = searchView();
-
-      setTimeout(() => {
-        setupEventListeners();
-      }, 200);
+  if (searchButton) {
+    searchButton.addEventListener("click", () => {
+      openSearchModal();
     });
   }
-  if (searchViewButton) {
-    searchViewButton.addEventListener("click", () => {
-      const city = searchViewInput.value;
-      if (city) {
-        getWeatherOverview(city).then(({ html, weatherData }) => {
-          document.querySelector("#app").innerHTML = html;
-          setBackground(weatherData.id, weatherData.dt, weatherData.sys);
+}
 
-          setTimeout(() => setupEventListeners(), 200);
-        });
-      } else {
-        alert("Bitte gib einen gültigen Stadtnamen ein.");
+function openSearchModal() {
+  const modalHtml = searchView();
+  document.body.insertAdjacentHTML("beforeend", modalHtml);
+
+  setTimeout(() => {
+    document.getElementById("searchModal").classList.add("show");
+  }, 10);
+
+  document
+    .getElementById("closeSearchModal")
+    .addEventListener("click", closeSearchModal);
+
+  document.getElementById("searchModal").addEventListener("click", (e) => {
+    if (e.target.id === "searchModal") {
+      closeSearchModal();
+    }
+  });
+
+  // Focus input
+  const searchInput = document.getElementById("searchInput");
+  const searchResults = document.getElementById("searchResults");
+  searchInput.focus();
+
+  // Valós idejű keresés az input változásakor
+  searchInput.addEventListener("input", async (e) => {
+    const query = e.target.value.trim();
+
+    if (query.length < 2) {
+      searchResults.innerHTML = "";
+      return;
+    }
+
+    try {
+      const cities = await searchCities(query);
+      displaySearchResults(cities, searchResults);
+    } catch (error) {
+      console.error("Fehler bei der Suche:", error);
+      searchResults.innerHTML =
+        '<div class="search-view__error">Bei der Suche ist ein Fehler aufgetreten.</div>';
+    }
+  });
+
+  // Enter billentyű az első találat kiválasztására
+  searchInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      const firstResult = searchResults.querySelector(
+        ".search-view__result-item"
+      );
+      if (firstResult) {
+        firstResult.click();
       }
-    });
+    }
+  });
+}
+
+function closeSearchModal() {
+  const modal = document.getElementById("searchModal");
+  modal.classList.remove("show");
+
+  setTimeout(() => {
+    modal.remove();
+  }, 300);
+
+  document.removeEventListener("keydown", handleEscapeKey);
+}
+
+function handleEscapeKey(e) {
+  if (e.key === "Escape") {
+    closeSearchModal();
   }
+}
+
+function displaySearchResults(cities, resultsContainer) {
+  if (cities.length === 0) {
+    resultsContainer.innerHTML =
+      '<div class="search-view__no-results">Kein Ergebnis</div>';
+    return;
+  }
+
+  resultsContainer.innerHTML = cities
+    .map((city) => {
+      const country = city.country || "";
+      const state = city.state ? `, ${city.state}` : "";
+      return `
+      <div class="search-view__result-item" data-city="${city.name}" data-country="${country}">
+        <div class="search-view__result-name">${city.name}</div>
+        <div class="search-view__result-details">${country}${state}</div>
+      </div>
+    `;
+    })
+    .join("");
+
+  // Kattintás esemény minden találatra
+  resultsContainer
+    .querySelectorAll(".search-view__result-item")
+    .forEach((item) => {
+      item.addEventListener("click", () => {
+        const cityName = item.getAttribute("data-city");
+        const countryCode = item.getAttribute("data-country");
+
+        getWeatherOverview(cityName, countryCode).then(
+          ({ html, weatherData }) => {
+            document.querySelector("#app").innerHTML = html;
+            setBackground(weatherData.id, weatherData.dt, weatherData.sys);
+            closeSearchModal();
+            setTimeout(() => setupEventListeners(), 200);
+          }
+        );
+      });
+    });
 }
 
 init();

@@ -15,3 +15,16 @@ export async function getWeatherData(location, country) {
     return null;
   }
 }
+
+export async function searchCities(query) {
+  const url = `https://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(
+    query
+  )}&limit=5&appid=${API_KEY}`;
+
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error("Fehler beim Abrufen der Stadtdaten");
+  }
+
+  return await response.json();
+}

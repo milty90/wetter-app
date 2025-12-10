@@ -1,0 +1,142 @@
+@use "variables" as *;
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+
+  &.show {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.modal-content {
+  position: relative;
+  background: $linear-gradient-dark;
+  border-radius: 20px;
+  padding: 30px 30px 10px 30px;
+  max-width: 80%;
+  width: 360px;
+  max-height: 80vh;
+  height: 50vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  transform: scale(0.9) translateY(-20px);
+  transition: transform 0.3s ease;
+
+  .modal-overlay.show & {
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modal-close {
+  position: absolute;
+  top: 30px;
+  right: 35px;
+  background: transparent;
+  border: none;
+  font-size: 30px;
+  color: $color-light;
+  cursor: pointer;
+  z-index: 1;
+  transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+  color: $primary-color;
+  transform: scale(1.1);
+}
+
+.search-view {
+  &__title {
+    color: $color-light;
+    margin-bottom: 30px;
+    padding-left: 5px;
+    font-size: 24px;
+    text-align: start;
+  }
+
+  &__input {
+    width: 90%;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    color: $color-light;
+    font-size: 16px;
+    outline: none;
+    margin-bottom: 20px;
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    &:focus {
+      background: rgba(255, 255, 255, 0.15);
+    }
+  }
+
+  &__results {
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 5px;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &__result-item {
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateX(5px);
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__result-name {
+    color: $color-light;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  &__result-details {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 13px;
+  }
+
+  &__no-results,
+  &__error {
+    color: rgba(255, 255, 255, 0.6);
+    text-align: center;
+    padding: 20px;
+    font-size: 14px;
+  }
+
+  &__error {
+    color: #ff6b6b;
+  }
+}
