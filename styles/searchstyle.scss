@@ -129,7 +129,8 @@
   }
 
   &__no-results,
-  &__error {
+  &__error,
+  &__loading {
     color: rgba(255, 255, 255, 0.6);
     text-align: center;
     padding: 20px;
@@ -138,5 +139,10 @@
 
   &__error {
     color: #ff6b6b;
+  }
+
+  &__loading {
+    color: rgba(255, 255, 255, 0.7);
+    font-style: italic;
   }
 }

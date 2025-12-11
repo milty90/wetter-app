@@ -17,9 +17,7 @@ export async function getWeatherData(location, country) {
 }
 
 export async function searchCities(query) {
-  const url = `https://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(
-    query
-  )}&limit=5&appid=${API_KEY}`;
+  const url = `https://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${API_KEY}`;
 
   const response = await fetch(url);
   if (!response.ok) {

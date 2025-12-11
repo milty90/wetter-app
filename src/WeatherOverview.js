@@ -44,8 +44,6 @@ export async function weatherOverview(data) {
     return cityName === city && countryCode === country;
   });
 
-  console.log("isFavorite:", isFavorite);
-
   return ` 
   <div class="weather-main">  
   <div class="weather-panel">

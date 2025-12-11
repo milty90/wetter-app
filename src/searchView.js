@@ -12,7 +12,6 @@ export function searchView() {
             id="searchInput"
           />
           <div class="search-view__results" id="searchResults">
-            <!-- Hier werden die Suchergebnisse angezeigt -->
           </div>
         </div>
       </div>

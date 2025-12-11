@@ -1,7 +1,6 @@
 export function getBackgroundImage(weatherId, timestamp, sys) {
   const hour = new Date(timestamp * 1000).getHours();
 
-  console.log("sys : ", sys);
   const isDay = sys === "d";
   const timeOfDay = isDay ? "day" : "night";
 
@@ -21,7 +20,6 @@ export function getBackgroundImage(weatherId, timestamp, sys) {
 
 export function setBackground(weatherId, timestamp, sys) {
   const bgImage = getBackgroundImage(weatherId, timestamp, sys);
-  console.log("weatherId:", weatherId, "isDay:", sys === "d");
 
   const isDay = sys === "d";
 
@@ -31,10 +29,10 @@ export function setBackground(weatherId, timestamp, sys) {
       ".weather-panel__header-location-icon"
     );
     const location = document.querySelector(".weather-panel__header-location");
-    const current_date = document.querySelector(".weather-panel__current-date");
-    const condition_text = document.querySelector(
-      ".weather-panel__condition-text"
-    );
+    // const current_date = document.querySelector(".weather-panel__current-date");
+    // const condition_text = document.querySelector(
+    //   ".weather-panel__condition-text"
+    // );
 
     if (weatherMain) {
       weatherMain.style.setProperty("--bg-image", `url('${bgImage}')`);

@@ -1,6 +1,6 @@
 import "/styles/style.scss";
 import "/src/wetterApi.js";
-import { getWeatherOverview } from "./WeatherOverview";
+import { getWeatherOverview } from "./WeatherOverview.js";
 import { getMenuOverview } from "./menuOverview";
 import { setBackground } from "./backgroundManager";
 import { saveCityInLocalState } from "./localStateManager";
@@ -148,22 +148,22 @@ function setupEventListeners() {
         menuButton.style.display = "none";
         menuButton.style.transform = "";
 
-        cancelButton.style.display = "block";
-        arrowButton.style.display = "block";
-        favoriteButton.style.display = "block";
+        if (cancelButton) cancelButton.style.display = "block";
+        if (arrowButton) arrowButton.style.display = "block";
+        if (favoriteButton) favoriteButton.style.display = "block";
 
-        cancelButton.style.opacity = "0";
-        arrowButton.style.opacity = "0";
-        favoriteButton.style.opacity = "0";
+        if (cancelButton) cancelButton.style.opacity = "0";
+        if (arrowButton) arrowButton.style.opacity = "0";
+        if (favoriteButton) favoriteButton.style.opacity = "0";
 
         setTimeout(() => {
-          cancelButton.style.opacity = "1";
+          if (cancelButton) cancelButton.style.opacity = "1";
         }, 50);
         setTimeout(() => {
-          arrowButton.style.opacity = "1";
+          if (arrowButton) arrowButton.style.opacity = "1";
         }, 100);
         setTimeout(() => {
-          favoriteButton.style.opacity = "1";
+          if (favoriteButton) favoriteButton.style.opacity = "1";
         }, 150);
       }, 150);
     });
@@ -174,8 +174,8 @@ function setupEventListeners() {
       cancelButton.style.transform = "rotate(90deg) scale(0.8)";
 
       setTimeout(() => {
-        arrowButton.style.display = "none";
-        favoriteButton.style.display = "none";
+        if (arrowButton) arrowButton.style.display = "none";
+        if (favoriteButton) favoriteButton.style.display = "none";
         cancelButton.style.display = "none";
         cancelButton.style.transform = "";
 
@@ -193,7 +193,6 @@ function setupEventListeners() {
       const cityName = city.getAttribute("data-city");
       const countryCode = city.getAttribute("data-country");
       const cityWithCountry = `${cityName},${countryCode}`;
-      console.log("Favorisieren:", cityWithCountry);
       saveCityInLocalState(cityWithCountry);
       favoriteButton.remove();
       setTimeout(() => setupEventListeners(), 200);
@@ -256,8 +255,6 @@ function setupEventListeners() {
         const countryElement = item.querySelector(".menu-item__country");
         const countryCode = countryElement.textContent;
 
-        console.log("Gewählte Stadt:", cityName, countryCode);
-
         getWeatherOverview(cityName, countryCode).then(
           ({ html, weatherData }) => {
             document.querySelector("#app").innerHTML = html;
@@ -295,31 +292,36 @@ function openSearchModal() {
     }
   });
 
-  // Focus input
   const searchInput = document.getElementById("searchInput");
   const searchResults = document.getElementById("searchResults");
   searchInput.focus();
 
-  // Valós idejű keresés az input változásakor
+  let debounceTimer;
+
   searchInput.addEventListener("input", async (e) => {
     const query = e.target.value.trim();
+
+    clearTimeout(debounceTimer);
 
     if (query.length < 2) {
       searchResults.innerHTML = "";
       return;
     }
 
-    try {
-      const cities = await searchCities(query);
-      displaySearchResults(cities, searchResults);
-    } catch (error) {
-      console.error("Fehler bei der Suche:", error);
-      searchResults.innerHTML =
-        '<div class="search-view__error">Bei der Suche ist ein Fehler aufgetreten.</div>';
-    }
+    searchResults.innerHTML =
+      '<div class="search-view__loading">Suche...</div>';
+
+    debounceTimer = setTimeout(async () => {
+      try {
+        const cities = await searchCities(query);
+        displaySearchResults(cities, searchResults);
+      } catch (error) {
+        searchResults.innerHTML =
+          '<div class="search-view__error">Bei der Suche ist ein Fehler aufgetreten.</div>';
+      }
+    }, 300);
   });
 
-  // Enter billentyű az első találat kiválasztására
   searchInput.addEventListener("keypress", (e) => {
     if (e.key === "Enter") {
       const firstResult = searchResults.querySelector(
@@ -369,7 +371,6 @@ function displaySearchResults(cities, resultsContainer) {
     })
     .join("");
 
-  // Kattintás esemény minden találatra
   resultsContainer
     .querySelectorAll(".search-view__result-item")
     .forEach((item) => {

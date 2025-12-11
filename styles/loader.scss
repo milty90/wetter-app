@@ -10,7 +10,6 @@
 
 .loader {
   --cloud-color: #4e4e4e;
-  --arrows-color: #7c7c7c;
   --time-animation: 1s;
   transform: scale(1);
 }
@@ -26,7 +25,7 @@
 
 .loader #cloud g:nth-child(3) {
   transform-origin: 50% 72.8938%;
-  fill: var(--arrows-color);
+
   filter: drop-shadow(0 0 8px #1e1e1e);
   animation: rotation var(--time-animation) linear infinite;
 }

@@ -15,8 +15,6 @@ export async function getMenuOverview() {
 
     const data = await getWeatherData(cityName, country);
 
-    console.log("Menu Overview Data for city:", city, data);
-
     if (data && data.city && data.list && data.list[0]) {
       const bgImage = getBackgroundImage(
         data.list[0].weather[0].id,

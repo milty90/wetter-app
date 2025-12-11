@@ -103,10 +103,10 @@ body {
       margin: 0;
     }
 
-    .weather-panel__header__location {
+    .weather-panel__header-location {
       font-size: 16px !important;
     }
-    .weather-panel__header__location-icon {
+    .weather-panel__header-location-icon {
       width: 16px !important;
     }
 
@@ -170,13 +170,12 @@ body {
     }
   }
 
-  &__ovwerview {
+  &__overview {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: left;
     width: fit-content;
     height: fit-content;
-    gap: 10px;
     margin-top: 20px;
   }
 

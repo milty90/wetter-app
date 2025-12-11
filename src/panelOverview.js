@@ -11,7 +11,7 @@ export function panelOverview(
   sunrise,
   sunset
 ) {
-  return `<div class="weather-panel__overview">
+  return `<div class="weather-panel__ovwerview">
         <div class="weather-panel__header">
           <img
             class="weather-panel__header-location-icon"
