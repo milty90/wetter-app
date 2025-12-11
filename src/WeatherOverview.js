@@ -4,7 +4,7 @@ import { panelDetails } from "./panelDetails";
 import { getWeatherData } from "./wetterApi";
 import { forecastItem, forcastDayItem } from "./forcast";
 import { renderLoadingScreen } from "./loadingScreen";
-import { dayFormatter } from "./dateFormatter";
+import { dayFormatter } from "./formatters";
 import { bodyDetails } from "./bodyDetails";
 import { getSavedCities } from "./localStateManager";
 

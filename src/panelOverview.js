@@ -1,4 +1,4 @@
-import { dateFormatter, timeFormatter, cityNameCutter } from "./dateFormatter";
+import { dateFormatter, timeFormatter, cityNameCutter } from "./formatters";
 
 export function panelOverview(
   city,

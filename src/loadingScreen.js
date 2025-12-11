@@ -1,4 +1,4 @@
-import { cityNameCutter } from "./dateFormatter";
+import { cityNameCutter } from "./formatters";
 
 export function renderLoadingScreen(city) {
   document.querySelector("#app").innerHTML = loadingScreen(city);

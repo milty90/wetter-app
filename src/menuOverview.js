@@ -1,9 +1,8 @@
 import { getBackgroundImage } from "./backgroundManager";
-import { cityNameCutter } from "./dateFormatter";
+import { cityNameCutter, locationFormatter } from "./formatters";
 import { renderLoadingScreen } from "./loadingScreen";
 import { getSavedCities } from "./localStateManager";
 import { getWeatherData } from "./wetterApi";
-import { locationFormatter } from "./dateFormatter";
 
 export async function getMenuOverview() {
   renderLoadingScreen();

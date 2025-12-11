@@ -1,4 +1,4 @@
-function getWeatherIcon(weatherId) {
+export default function getWeatherIcon(weatherId) {
   switch (true) {
     case weatherId >= 200 && weatherId < 300:
       return `<img
@@ -50,4 +50,3 @@ function getWeatherIcon(weatherId) {
           />`;
   }
 }
-export default getWeatherIcon;

@@ -141,11 +141,6 @@
     }
   }
 
-  @include largeScreens {
-    margin: 20px;
-    padding: 20px;
-  }
-
   &__left-side {
     display: flex;
     flex-direction: row;
@@ -246,48 +241,13 @@
 
 .search-container {
   display: flex;
-  right: 20px;
-  bottom: 20px;
+  right: 25px;
+  bottom: 25px;
   width: 100%;
   align-items: center;
   justify-content: flex-end;
   position: relative;
   z-index: 1;
-
-  // &__button {
-  //   display: flex;
-  //   align-items: center;
-  //   justify-content: center;
-  //   background-color: $color-light;
-  //   border-radius: 50%;
-  //   width: 50px;
-  //   height: 50px;
-  //   cursor: pointer;
-  //   transition: all 0.3s ease;
-  //   box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
-  //     rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
-  //     rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
-  // }
-
-  // &__button:hover {
-  //   background-color: $primary-color;
-  //   transform: rotateY(180deg);
-  // }
-
-  // &__icon {
-  //   width: 24px;
-  //   height: 24px;
-  //   filter: brightness(0) saturate(100%) invert(49%) sepia(55%) saturate(680%)
-  //     hue-rotate(325deg) brightness(99%) contrast(86%);
-  //   transition: all 0.3s ease;
-  // }
-
-  // &__button:hover &__icon,
-  // &__icon:hover {
-  //   transform: scale(1.1);
-  //   filter: invert(100%) sepia(50%) saturate(200%) hue-rotate(100deg)
-  //     brightness(100%) contrast(95%);
-  // }
 
   &__button {
     font-family: inherit;
