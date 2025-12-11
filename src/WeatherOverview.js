@@ -6,6 +6,7 @@ import { forecastItem, forcastDayItem } from "./forcast";
 import { renderLoadingScreen } from "./loadingScreen";
 import { dayFormatter } from "./dateFormatter";
 import { bodyDetails } from "./bodyDetails";
+import { getSavedCities } from "./localStateManager";
 
 export async function getWeatherOverview(city, country) {
   renderLoadingScreen(city);
@@ -36,6 +37,15 @@ export async function weatherOverview(data) {
     ],
   } = data || {};
 
+  const savedCities = getSavedCities();
+
+  const isFavorite = savedCities.some((cityItem) => {
+    const [cityName, countryCode] = cityItem.split(",");
+    return cityName === city && countryCode === country;
+  });
+
+  console.log("isFavorite:", isFavorite);
+
   return ` 
   <div class="weather-main">  
   <div class="weather-panel">
@@ -50,7 +60,7 @@ export async function weatherOverview(data) {
         sunrise,
         sunset
       )}
-      ${panelOptions(description, id)}
+      ${panelOptions(description, id, isFavorite)}
   </div>
   <div class="weather-details">
     ${panelDetails(speed, humidity, feels_like)}

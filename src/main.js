@@ -190,10 +190,12 @@ function setupEventListeners() {
 
   if (favoriteButton) {
     favoriteButton.addEventListener("click", () => {
-      const cityName = city.textContent;
-      console.log("Favorisieren:", cityName);
-      saveCityInLocalState(cityName);
-      document.querySelector("#app").innerHTML = menuHtml;
+      const cityName = city.getAttribute("data-city");
+      const countryCode = city.getAttribute("data-country");
+      const cityWithCountry = `${cityName},${countryCode}`;
+      console.log("Favorisieren:", cityWithCountry);
+      saveCityInLocalState(cityWithCountry);
+      favoriteButton.remove();
       setTimeout(() => setupEventListeners(), 200);
     });
   }

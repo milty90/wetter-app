@@ -18,9 +18,10 @@ export function panelOverview(
             src="/location-pin.svg"
             alt="Location Icon"
           />
-          <p class="weather-panel__header-location">${cityNameCutter(
-            city
-          )}, ${country}</p>
+          <p class="weather-panel__header-location" data-city="${city}" data-country="${country}">${cityNameCutter(
+    city
+  )}, 
+          ${country}</p>
         </div>
         <p class="weather-panel__current-date">${dateFormatter(dt)}</p>
         <div class="weather-panel__temp-container">
