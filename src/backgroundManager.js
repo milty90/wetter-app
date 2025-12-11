@@ -5,11 +5,11 @@ export function getBackgroundImage(weatherId, timestamp, sys) {
   const timeOfDay = isDay ? "day" : "night";
 
   let weather = "clear";
-  if (weatherId >= 200 && weatherId < 300) weather = "thunderstrom";
+  if (weatherId >= 200 && weatherId < 234) weather = "thunderstrom";
   else if (weatherId >= 300 && weatherId < 501) weather = "drizzle";
   else if (weatherId >= 501 && weatherId < 600) weather = "rain";
-  else if (weatherId >= 600 && weatherId < 700) weather = "snow";
-  else if (weatherId >= 700 && weatherId < 800) weather = "mist";
+  else if (weatherId >= 600 && weatherId < 623) weather = "snow";
+  else if (weatherId >= 701 && weatherId < 782) weather = "mist";
   else if (weatherId === 800) weather = "clear";
   else if (weatherId >= 801 && weatherId <= 802) weather = "clouds";
   else if (weatherId > 802) weather = "overcast";
