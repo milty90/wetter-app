@@ -1,7 +1,7 @@
-export function saveCityInLocalState(city) {
+export function saveCityInLocalState(id) {
   let cities = JSON.parse(localStorage.getItem("cities")) || [];
-  if (!cities.includes(city)) {
-    cities.push(city);
+  if (!cities.includes(id)) {
+    cities.push(id);
     localStorage.setItem("cities", JSON.stringify(cities));
   }
 }
@@ -10,8 +10,8 @@ export function getSavedCities() {
   return JSON.parse(localStorage.getItem("cities")) || [];
 }
 
-export function deleteSavedCity(city) {
+export function deleteSavedCity(id) {
   let cities = JSON.parse(localStorage.getItem("cities")) || [];
-  cities = cities.filter((savedCity) => savedCity !== city);
+  cities = cities.filter((savedCityId) => savedCityId !== id);
   localStorage.setItem("cities", JSON.stringify(cities));
 }

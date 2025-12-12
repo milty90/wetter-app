@@ -52,7 +52,7 @@ export function cityNameCutter(city) {
 
 export function locationFormatter(location) {
   const parts = location.split(",");
-  const city = parts[0].trim();
-  const country = parts[1] ? parts[1].trim() : "";
-  return { city, country };
+  const lat = parts[0].trim();
+  const lon = parts[1] ? parts[1].trim() : "";
+  return { lat, lon };
 }

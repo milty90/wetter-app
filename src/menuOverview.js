@@ -10,10 +10,12 @@ export async function getMenuOverview() {
 
   const cards = [];
 
-  for (let city of cities) {
-    const { city: cityName, country } = locationFormatter(city);
+  for (let geoCoord of cities) {
+    const { lat, lon } = locationFormatter(geoCoord);
 
-    const data = await getWeatherData(cityName, country);
+    const data = await getWeatherData(lat, lon);
+
+    console.log("data in menu overview: ", data);
 
     if (data && data.city && data.list && data.list[0]) {
       const bgImage = getBackgroundImage(
@@ -24,7 +26,7 @@ export async function getMenuOverview() {
 
       cards.push(
         cardItem(
-          city,
+          data.name,
           data.city.name,
           data.list[0].weather[0].description,
           data.city.country,

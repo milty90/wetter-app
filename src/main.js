@@ -107,6 +107,7 @@ function setupEventListeners() {
   const deleteIcons = document.querySelectorAll(".menu-item__delete-icon");
   const searchButton = document.querySelector(".search-container__button");
   const city = document.querySelector(".weather-panel__header-location");
+  const cityId = document.querySelector(".weather-panel");
 
   if (
     weatherMain &&
@@ -192,8 +193,11 @@ function setupEventListeners() {
     favoriteButton.addEventListener("click", () => {
       const cityName = city.getAttribute("data-city");
       const countryCode = city.getAttribute("data-country");
-      const cityWithCountry = `${cityName},${countryCode}`;
-      saveCityInLocalState(cityWithCountry);
+      const geoLat = cityId.getAttribute("data-geo-lat");
+      const geoLon = cityId.getAttribute("data-geo-lon");
+
+      const geoCoord = `${geoLat},${geoLon}`;
+      saveCityInLocalState(geoCoord);
       favoriteButton.remove();
       setTimeout(() => setupEventListeners(), 200);
     });
@@ -252,10 +256,11 @@ function setupEventListeners() {
       item.addEventListener("click", () => {
         const locationElement = item.querySelector(".menu-item__location");
         const cityName = locationElement.textContent;
-        const countryElement = item.querySelector(".menu-item__country");
-        const countryCode = countryElement.textContent;
 
-        getWeatherOverview(cityName, countryCode).then(
+        const latitude = cityId.getAttribute("data-geo-lat");
+        const longitude = cityId.getAttribute("data-geo-lon");
+
+        getWeatherOverview(latitude, longitude, cityName).then(
           ({ html, weatherData }) => {
             document.querySelector("#app").innerHTML = html;
             setBackground(weatherData.id, weatherData.dt, weatherData.sys);
@@ -314,12 +319,13 @@ function openSearchModal() {
     debounceTimer = setTimeout(async () => {
       try {
         const cities = await searchCities(query);
+        console.log("cities from search: ", cities);
         displaySearchResults(cities, searchResults);
       } catch (error) {
         searchResults.innerHTML =
           '<div class="search-view__error">Bei der Suche ist ein Fehler aufgetreten.</div>';
       }
-    }, 300);
+    }, 500);
   });
 
   searchInput.addEventListener("keypress", (e) => {
@@ -362,10 +368,13 @@ function displaySearchResults(cities, resultsContainer) {
     .map((city) => {
       const country = city.country || "";
       const state = city.state ? `, ${city.state}` : "";
+      const geoLat = city.lat;
+      const geoLon = city.lon;
+      console.log("city in search results: ", city);
       return `
-      <div class="search-view__result-item" data-city="${city.name}" data-country="${country}">
+      <div class="search-view__result-item" data-geo-lat="${geoLat}" data-geo-lon="${geoLon}" data-city="${city.name}" data-country="${country}">
         <div class="search-view__result-name">${city.name}</div>
-        <div class="search-view__result-details">${country}${state}</div>
+       <div class="search-view__result-details">${country}${state}</div>
       </div>
     `;
     })
@@ -374,11 +383,14 @@ function displaySearchResults(cities, resultsContainer) {
   resultsContainer
     .querySelectorAll(".search-view__result-item")
     .forEach((item) => {
+      const geoLat = item.getAttribute("data-geo-lat");
+      const geoLon = item.getAttribute("data-geo-lon");
       item.addEventListener("click", () => {
         const cityName = item.getAttribute("data-city");
-        const countryCode = item.getAttribute("data-country");
+        // const countryCode = item.getAttribute("data-country");
+        console.log("geoLat, geoLon on click: ", geoLat, geoLon);
 
-        getWeatherOverview(cityName, countryCode).then(
+        getWeatherOverview(geoLat, geoLon, cityName).then(
           ({ html, weatherData }) => {
             document.querySelector("#app").innerHTML = html;
             setBackground(weatherData.id, weatherData.dt, weatherData.sys);

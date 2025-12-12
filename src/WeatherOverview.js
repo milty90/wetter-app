@@ -8,11 +8,14 @@ import { dayFormatter } from "./formatters";
 import { bodyDetails } from "./bodyDetails";
 import { getSavedCities } from "./localStateManager";
 
-export async function getWeatherOverview(city, country) {
+export async function getWeatherOverview(lat, lon, city) {
   renderLoadingScreen(city);
-  const data = await getWeatherData(city, country);
+
+  const data = await getWeatherData(lat, lon);
+
+  console.log("data in weather overview: ", city);
   const weatherData = {
-    city: data.city,
+    city: data.city.name,
     id: data.list[0].weather[0].id,
     dt: data.list[0].dt,
     sys: data.list[0].sys.pod,
@@ -24,13 +27,20 @@ export async function getWeatherOverview(city, country) {
 export async function weatherOverview(data) {
   console.log("weatherOverview : ", data);
   const {
-    city: { name: city, country, sunrise, sunset },
+    city: {
+      name: city,
+      coord: { lat: latitude, lon: longitude },
+      country,
+      sunrise,
+      sunset,
+      id,
+    },
 
     list: [
       {
         dt,
         main: { temp, temp_max, temp_min, humidity, feels_like },
-        weather: [{ description, id }],
+        weather: [{ description, id: weatherId }],
         wind: { speed },
         sys: { pod },
       },
@@ -40,13 +50,19 @@ export async function weatherOverview(data) {
   const savedCities = getSavedCities();
 
   const isFavorite = savedCities.some((cityItem) => {
-    const [cityName, countryCode] = cityItem.split(",");
-    return cityName === city && countryCode === country;
+    const [cityName, countryCode, latitude, longitude] = cityItem.split(",");
+
+    return (
+      cityName === city &&
+      countryCode === country &&
+      String(latitude) === String(latitude) &&
+      String(longitude) === String(longitude)
+    );
   });
 
   return ` 
   <div class="weather-main">  
-  <div class="weather-panel">
+  <div class="weather-panel" data-geo-lat="${latitude}" data-geo-lon="${longitude}">
       ${panelOverview(
         city,
         country,
@@ -58,7 +74,7 @@ export async function weatherOverview(data) {
         sunrise,
         sunset
       )}
-      ${panelOptions(description, id, isFavorite)}
+      ${panelOptions(description, weatherId, isFavorite)}
   </div>
   <div class="weather-details">
     ${panelDetails(speed, humidity, feels_like)}
