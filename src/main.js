@@ -256,18 +256,18 @@ function setupEventListeners() {
       item.addEventListener("click", () => {
         const locationElement = item.querySelector(".menu-item__location");
         const cityName = locationElement.textContent;
+        const geo = document.querySelector(".menu-item");
 
-        const latitude = cityId.getAttribute("data-geo-lat");
-        const longitude = cityId.getAttribute("data-geo-lon");
+        const lat = item.getAttribute("data-lat");
+        const lon = item.getAttribute("data-lon");
+        console.log("cityName on click: ", item);
 
-        getWeatherOverview(latitude, longitude, cityName).then(
-          ({ html, weatherData }) => {
-            document.querySelector("#app").innerHTML = html;
-            setBackground(weatherData.id, weatherData.dt, weatherData.sys);
+        getWeatherOverview(lat, lon, cityName).then(({ html, weatherData }) => {
+          document.querySelector("#app").innerHTML = html;
+          setBackground(weatherData.id, weatherData.dt, weatherData.sys);
 
-            setTimeout(() => setupEventListeners(), 200);
-          }
-        );
+          setTimeout(() => setupEventListeners(), 200);
+        });
       });
     });
   }
@@ -320,12 +320,12 @@ function openSearchModal() {
       try {
         const cities = await searchCities(query);
         console.log("cities from search: ", cities);
-        displaySearchResults(cities, searchResults);
+        await displaySearchResults(cities, searchResults);
       } catch (error) {
         searchResults.innerHTML =
           '<div class="search-view__error">Bei der Suche ist ein Fehler aufgetreten.</div>';
       }
-    }, 500);
+    }, 200);
   });
 
   searchInput.addEventListener("keypress", (e) => {
@@ -356,8 +356,7 @@ function handleEscapeKey(e) {
     closeSearchModal();
   }
 }
-
-function displaySearchResults(cities, resultsContainer) {
+async function displaySearchResults(cities, resultsContainer) {
   if (cities.length === 0) {
     resultsContainer.innerHTML =
       '<div class="search-view__no-results">Kein Ergebnis</div>';

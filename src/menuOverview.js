@@ -26,7 +26,8 @@ export async function getMenuOverview() {
 
       cards.push(
         cardItem(
-          data.name,
+          lat,
+          lon,
           data.city.name,
           data.list[0].weather[0].description,
           data.city.country,
@@ -61,9 +62,9 @@ export function menuOverview(cardsHtml) {
 </div>`;
 }
 
-function cardItem(originalCity, city, condition, country, temp, icon, bgImage) {
+function cardItem(lat, lon, city, condition, country, temp, icon, bgImage) {
   return `
-  <div class="menu-item" data-city="${originalCity}" style="background-image: url('${bgImage}'); background-size: cover; background-position: center;">
+  <div class="menu-item" data-lat="${lat}" data-lon="${lon}" style="background-image: url('${bgImage}'); background-size: cover; background-position: center;">
     <div class="menu-item__left-side">
   <div class="menu-item__left-content">
        <img class="menu-item__icon" src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="Weather Icon">

@@ -13,10 +13,10 @@ export async function getWeatherOverview(lat, lon, city) {
 
   const data = await getWeatherData(lat, lon);
 
-  console.log("data in weather overview: ", city);
+  console.log("data in weather overview: ", lat, lon, data);
   const weatherData = {
-    city: data.city.name,
-    id: data.list[0].weather[0].id,
+    city: city,
+    id: data.city.id,
     dt: data.list[0].dt,
     sys: data.list[0].sys.pod,
   };

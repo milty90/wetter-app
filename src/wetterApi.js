@@ -22,7 +22,7 @@ export async function searchCities(query) {
   const city = `${BASE_URL}weather?q=${query}&appid=${API_KEY}`;
   const url = `${GEO_URL}direct?q=${query}&limit=5&appid=${API_KEY}`;
 
-  const response = await fetch(city);
+  const response = await fetch(url);
 
   // if (response.ok) {
   //   throw new Error("Fehler beim Abrufen der Stadtdaten");
