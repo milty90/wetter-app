@@ -8,15 +8,15 @@ import { dayFormatter } from "./formatters";
 import { bodyDetails } from "./bodyDetails";
 import { getSavedCities } from "./localStateManager";
 
-export async function getWeatherOverview(lat, lon, city) {
+export async function getWeatherOverview(cityId, city) {
   renderLoadingScreen(city);
 
-  const data = await getWeatherData(lat, lon);
+  const data = await getWeatherData(cityId);
 
-  console.log("data in weather overview: ", lat, lon, data);
+  console.log("data in weather overview: ", cityId, data);
   const weatherData = {
     city: city,
-    id: data.city.id,
+    id: data.list[0].weather[0].id,
     dt: data.list[0].dt,
     sys: data.list[0].sys.pod,
   };
@@ -29,11 +29,11 @@ export async function weatherOverview(data) {
   const {
     city: {
       name: city,
+      id: cityId,
       coord: { lat: latitude, lon: longitude },
       country,
       sunrise,
       sunset,
-      id,
     },
 
     list: [
@@ -49,20 +49,13 @@ export async function weatherOverview(data) {
 
   const savedCities = getSavedCities();
 
-  const isFavorite = savedCities.some((cityItem) => {
-    const [cityName, countryCode, latitude, longitude] = cityItem.split(",");
-
-    return (
-      cityName === city &&
-      countryCode === country &&
-      String(latitude) === String(latitude) &&
-      String(longitude) === String(longitude)
-    );
-  });
+  const isFavorite = savedCities.some(
+    (savedId) => String(savedId) === String(cityId)
+  );
 
   return ` 
   <div class="weather-main">  
-  <div class="weather-panel" data-geo-lat="${latitude}" data-geo-lon="${longitude}">
+  <div class="weather-panel" data-city-id="${cityId}" data-geo-lat="${latitude}" data-geo-lon="${longitude}">
       ${panelOverview(
         city,
         country,

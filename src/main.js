@@ -7,6 +7,8 @@ import { saveCityInLocalState } from "./localStateManager";
 import { deleteSavedCity } from "./localStateManager";
 import { searchView } from "./searchView.js";
 import { searchCities } from "./wetterApi.js";
+import { getIdbyLocationandCountry } from "./wetterApi.js";
+import { cityNameCutter, locationFormatter } from "./formatters.js";
 
 async function init() {
   const menuHtml = await getMenuOverview();
@@ -107,7 +109,7 @@ function setupEventListeners() {
   const deleteIcons = document.querySelectorAll(".menu-item__delete-icon");
   const searchButton = document.querySelector(".search-container__button");
   const city = document.querySelector(".weather-panel__header-location");
-  const cityId = document.querySelector(".weather-panel");
+  const cityIdAttr = document.querySelector(".weather-panel");
 
   if (
     weatherMain &&
@@ -191,13 +193,13 @@ function setupEventListeners() {
 
   if (favoriteButton) {
     favoriteButton.addEventListener("click", () => {
-      const cityName = city.getAttribute("data-city");
-      const countryCode = city.getAttribute("data-country");
-      const geoLat = cityId.getAttribute("data-geo-lat");
-      const geoLon = cityId.getAttribute("data-geo-lon");
+      // const cityName = city.getAttribute("data-city");
+      // const countryCode = city.getAttribute("data-country");
+      // const geoLat = cityIdAttr.getAttribute("data-geo-lat");
+      // const geoLon = cityIdAttr.getAttribute("data-geo-lon");
+      const cityIdValue = cityIdAttr.getAttribute("data-city-id");
 
-      const geoCoord = `${geoLat},${geoLon}`;
-      saveCityInLocalState(geoCoord);
+      saveCityInLocalState(cityIdValue);
       favoriteButton.remove();
       setTimeout(() => setupEventListeners(), 200);
     });
@@ -243,9 +245,9 @@ function setupEventListeners() {
         event.stopPropagation();
 
         const menuItem = deleteIcon.closest(".menu-item");
-        const cityName = menuItem.getAttribute("data-city");
+        const cityId = menuItem.getAttribute("data-city-id");
 
-        deleteSavedCity(cityName);
+        deleteSavedCity(cityId);
         menuItem.remove();
       });
     });
@@ -256,13 +258,11 @@ function setupEventListeners() {
       item.addEventListener("click", () => {
         const locationElement = item.querySelector(".menu-item__location");
         const cityName = locationElement.textContent;
-        const geo = document.querySelector(".menu-item");
+        const cityId = item.getAttribute("data-city-id");
 
-        const lat = item.getAttribute("data-lat");
-        const lon = item.getAttribute("data-lon");
-        console.log("cityName on click: ", item);
+        console.log("cityName on click: ", cityId, cityName);
 
-        getWeatherOverview(lat, lon, cityName).then(({ html, weatherData }) => {
+        getWeatherOverview(cityId, cityName).then(({ html, weatherData }) => {
           document.querySelector("#app").innerHTML = html;
           setBackground(weatherData.id, weatherData.dt, weatherData.sys);
 
@@ -382,21 +382,21 @@ async function displaySearchResults(cities, resultsContainer) {
   resultsContainer
     .querySelectorAll(".search-view__result-item")
     .forEach((item) => {
-      const geoLat = item.getAttribute("data-geo-lat");
-      const geoLon = item.getAttribute("data-geo-lon");
-      item.addEventListener("click", () => {
+      item.addEventListener("click", async () => {
         const cityName = item.getAttribute("data-city");
-        // const countryCode = item.getAttribute("data-country");
-        console.log("geoLat, geoLon on click: ", geoLat, geoLon);
+        const country = item.getAttribute("data-country");
 
-        getWeatherOverview(geoLat, geoLon, cityName).then(
-          ({ html, weatherData }) => {
-            document.querySelector("#app").innerHTML = html;
-            setBackground(weatherData.id, weatherData.dt, weatherData.sys);
-            closeSearchModal();
-            setTimeout(() => setupEventListeners(), 200);
-          }
+        const cityId = await getIdbyLocationandCountry(
+          cityNameCutter(cityName),
+          country
         );
+
+        getWeatherOverview(cityId, cityName).then(({ html, weatherData }) => {
+          document.querySelector("#app").innerHTML = html;
+          setBackground(weatherData.id, weatherData.dt, weatherData.sys);
+          closeSearchModal();
+          setTimeout(() => setupEventListeners(), 200);
+        });
       });
     });
 }

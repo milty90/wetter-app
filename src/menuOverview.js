@@ -10,10 +10,8 @@ export async function getMenuOverview() {
 
   const cards = [];
 
-  for (let geoCoord of cities) {
-    const { lat, lon } = locationFormatter(geoCoord);
-
-    const data = await getWeatherData(lat, lon);
+  for (let cityId of cities) {
+    const data = await getWeatherData(cityId);
 
     console.log("data in menu overview: ", data);
 
@@ -26,8 +24,7 @@ export async function getMenuOverview() {
 
       cards.push(
         cardItem(
-          lat,
-          lon,
+          data.city.id,
           data.city.name,
           data.list[0].weather[0].description,
           data.city.country,
@@ -62,9 +59,9 @@ export function menuOverview(cardsHtml) {
 </div>`;
 }
 
-function cardItem(lat, lon, city, condition, country, temp, icon, bgImage) {
+function cardItem(cityId, city, condition, country, temp, icon, bgImage) {
   return `
-  <div class="menu-item" data-lat="${lat}" data-lon="${lon}" style="background-image: url('${bgImage}'); background-size: cover; background-position: center;">
+  <div class="menu-item" data-city-id="${cityId}" style="background-image: url('${bgImage}'); background-size: cover; background-position: center;">
     <div class="menu-item__left-side">
   <div class="menu-item__left-content">
        <img class="menu-item__icon" src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="Weather Icon">

@@ -30,11 +30,13 @@ export function timeFormatter(timestamp) {
 }
 
 export function cityNameCutter(city) {
-  if (!city.includes(" ")) {
-    return city;
+  const cityWithoutParentheses = city.split("(")[0].trim();
+
+  if (!cityWithoutParentheses.includes(" ")) {
+    return cityWithoutParentheses;
   }
 
-  const words = city.split(" ");
+  const words = cityWithoutParentheses.split(" ");
   const result = [];
 
   for (let i = 0; i < words.length; i++) {
