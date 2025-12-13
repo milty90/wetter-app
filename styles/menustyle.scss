@@ -1,5 +1,5 @@
 @use "variables" as *;
-@import "../styles/mixins";
+@use "../styles/mixins" as *;
 
 .menu-main {
   display: flex;

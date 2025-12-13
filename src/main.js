@@ -19,7 +19,13 @@ async function init() {
   }, 200);
 }
 
+let listenersAbort = new AbortController();
+
 function setupEventListeners() {
+  listenersAbort.abort();
+  listenersAbort = new AbortController();
+  const signal = listenersAbort.signal;
+
   const weatherMain = document.querySelector(".weather-main");
   const weatherPanel = document.querySelector(".weather-panel");
   const weatherForecastTitle = document.querySelector(
@@ -56,13 +62,16 @@ function setupEventListeners() {
         if (hourlyItems) hourlyItems.classList.remove("show");
         if (divider) divider.classList.remove("show");
 
-        setTimeout(() => {
-          arrowUpIcon.style.display = "none";
-          if (arrowDownIcon) arrowDownIcon.style.display = "flex";
-          if (bodyDetails) bodyDetails.style.display = "none";
-          if (hourlyItems) hourlyItems.style.display = "none";
-          if (divider) divider.style.display = "none";
-        }, 100);
+        setTimeout(
+          () => {
+            arrowUpIcon.style.display = "none";
+            if (arrowDownIcon) arrowDownIcon.style.display = "flex";
+            if (bodyDetails) bodyDetails.style.display = "none";
+            if (hourlyItems) hourlyItems.style.display = "none";
+            if (divider) divider.style.display = "none";
+          },
+          { signal }
+        );
       });
     });
   }
@@ -90,11 +99,14 @@ function setupEventListeners() {
         if (hourlyItems) hourlyItems.style.display = "flex";
         if (divider) divider.style.display = "block";
 
-        setTimeout(() => {
-          if (bodyDetails) bodyDetails.classList.add("show");
-          if (hourlyItems) hourlyItems.classList.add("show");
-          if (divider) divider.classList.add("show");
-        }, 10);
+        setTimeout(
+          () => {
+            if (bodyDetails) bodyDetails.classList.add("show");
+            if (hourlyItems) hourlyItems.classList.add("show");
+            if (divider) divider.classList.add("show");
+          },
+          { signal }
+        );
       });
     });
   }
@@ -119,7 +131,7 @@ function setupEventListeners() {
   ) {
     weatherMain.addEventListener("scroll", () => {
       if (weatherMain.scrollTop > 120) {
-        weatherPanel.classList.add("sticky");
+        weatherPanel.classList.add("weather-panel--sticky");
         weatherForecastContainer.classList.add("with-sticky-header");
         weatherForecastTitle.classList.add("with-sticky-header");
 
@@ -128,7 +140,7 @@ function setupEventListeners() {
         if (favoriteButton) favoriteButton.style.display = "none";
         if (arrowButton) arrowButton.style.display = "none";
       } else {
-        weatherPanel.classList.remove("sticky");
+        weatherPanel.classList.remove("weather-panel--sticky");
         weatherForecastContainer.classList.remove("with-sticky-header");
         weatherForecastTitle.classList.remove("with-sticky-header");
 
@@ -142,7 +154,7 @@ function setupEventListeners() {
 
   if (menuButton) {
     menuButton.addEventListener("click", () => {
-      if (weatherPanel?.classList.contains("sticky")) {
+      if (weatherPanel?.classList.contains("weather-panel--sticky")) {
         return;
       }
 
@@ -193,10 +205,6 @@ function setupEventListeners() {
 
   if (favoriteButton) {
     favoriteButton.addEventListener("click", () => {
-      // const cityName = city.getAttribute("data-city");
-      // const countryCode = city.getAttribute("data-country");
-      // const geoLat = cityIdAttr.getAttribute("data-geo-lat");
-      // const geoLon = cityIdAttr.getAttribute("data-geo-lon");
       const cityIdValue = cityIdAttr.getAttribute("data-city-id");
 
       saveCityInLocalState(cityIdValue);
@@ -265,7 +273,6 @@ function setupEventListeners() {
         getWeatherOverview(cityId, cityName).then(({ html, weatherData }) => {
           document.querySelector("#app").innerHTML = html;
           setBackground(weatherData.id, weatherData.dt, weatherData.sys);
-
           setTimeout(() => setupEventListeners(), 200);
         });
       });
@@ -395,7 +402,7 @@ async function displaySearchResults(cities, resultsContainer) {
           document.querySelector("#app").innerHTML = html;
           setBackground(weatherData.id, weatherData.dt, weatherData.sys);
           closeSearchModal();
-          setTimeout(() => setupEventListeners(), 200);
+          requestAnimationFrame(() => setupEventListeners());
         });
       });
     });

@@ -75,10 +75,10 @@ export function loadingScreen(city) {
         </div>
         ${
           city
-            ? `<div class="loading__text">Wetterdaten werden geladen für ${cityNameCutter(
+            ? `<div class="loading__text">Lade Wetter für ${cityNameCutter(
                 city
               )}...</div>`
-            : '<div class="loading__text">Wetterdaten werden geladen...</div>'
+            : '<div class="loading__text">Lade Übersicht...</div>'
         }
       </div>`;
 }

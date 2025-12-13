@@ -1,7 +1,8 @@
 @use "variables" as *;
-@import "../styles/mixins";
-@import "/styles/menustyle.scss";
-@import "/styles/searchstyle.scss";
+@use "loader" as *;
+@use "../styles/mixins" as *;
+@use "menustyle" as *;
+@use "searchstyle" as *;
 
 * {
   padding: 0;
@@ -84,7 +85,7 @@ body {
   padding: 40px 20px 0px 30px;
   transition: all 0.3s ease;
 
-  &.sticky {
+  &--sticky {
     @include sticky-header-on-scroll;
     flex-direction: row;
 
@@ -134,7 +135,7 @@ body {
       display: flex;
       margin: 0;
 
-      .weather-panel__menu-icon {
+      &__menu-icon {
         display: none;
       }
       .weather-panel__options-left {
@@ -464,7 +465,6 @@ body {
     margin: 0 2rem 0 2rem;
     min-height: max-content;
     gap: 1.7rem;
-
     scrollbar-width: none;
   }
 
@@ -529,10 +529,10 @@ body {
     border-radius: 20px 20px 0 0;
     color: #555555;
     font-weight: 600;
-    box-sizing: border-box; // Include padding in width
+    box-sizing: border-box;
 
     @include largeScreens {
-      width: 370px; // Same as body
+      width: 370px;
     }
   }
 
@@ -697,7 +697,6 @@ body {
   }
 }
 
-// Weather panel button states (BEM módosítók)
 .weather-panel {
   &__button {
     &--hidden {

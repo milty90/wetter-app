@@ -4,7 +4,7 @@ import { panelDetails } from "./panelDetails";
 import { getWeatherData } from "./wetterApi";
 import { forecastItem, forcastDayItem } from "./forcast";
 import { renderLoadingScreen } from "./loadingScreen";
-import { dayFormatter } from "./formatters";
+import { dayFormatter, escapeHtml } from "./formatters";
 import { bodyDetails } from "./bodyDetails";
 import { getSavedCities } from "./localStateManager";
 
@@ -12,10 +12,16 @@ export async function getWeatherOverview(cityId, city) {
   renderLoadingScreen(city);
 
   const data = await getWeatherData(cityId);
+  if (!data || !data.list || !data.list[0]) {
+    console.error("Weather data missing for cityId:", cityId);
+    return {
+      html: "<div>Fehler beim Laden der Wetterdaten</div>",
+      weatherData: null,
+    };
+  }
 
-  console.log("data in weather overview: ", cityId, data);
   const weatherData = {
-    city: city,
+    city,
     id: data.list[0].weather[0].id,
     dt: data.list[0].dt,
     sys: data.list[0].sys.pod,
@@ -55,7 +61,11 @@ export async function weatherOverview(data) {
 
   return ` 
   <div class="weather-main">  
-  <div class="weather-panel" data-city-id="${cityId}" data-geo-lat="${latitude}" data-geo-lon="${longitude}">
+  <div class="weather-panel" data-city-id="${escapeHtml(
+    String(cityId)
+  )}" data-geo-lat="${escapeHtml(String(latitude))}" data-geo-lon="${escapeHtml(
+    String(longitude)
+  )}">
       ${panelOverview(
         city,
         country,
