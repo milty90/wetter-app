@@ -29,10 +29,6 @@ export function setBackground(weatherId, timestamp, sys) {
       ".weather-panel__header-location-icon"
     );
     const location = document.querySelector(".weather-panel__header-location");
-    // const current_date = document.querySelector(".weather-panel__current-date");
-    // const condition_text = document.querySelector(
-    //   ".weather-panel__condition-text"
-    // );
 
     if (weatherMain) {
       weatherMain.style.setProperty("--bg-image", `url('${bgImage}')`);
@@ -55,7 +51,7 @@ export function setBackground(weatherId, timestamp, sys) {
         }
       }
     } else {
-      console.error("weather-main element not found!");
+      console.error("WeatherOverview nicht gefunden!");
     }
   }, 200);
 }

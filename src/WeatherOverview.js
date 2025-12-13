@@ -4,7 +4,7 @@ import { panelDetails } from "./panelDetails";
 import { getWeatherData } from "./wetterApi";
 import { forecastItem, forcastDayItem } from "./forcast";
 import { renderLoadingScreen } from "./loadingScreen";
-import { dayFormatter, escapeHtml } from "./formatters";
+import { dayFormatter, timeFormatter, escapeHtml } from "./formatters";
 import { bodyDetails } from "./bodyDetails";
 import { getSavedCities } from "./localStateManager";
 
@@ -13,11 +13,8 @@ export async function getWeatherOverview(cityId, city) {
 
   const data = await getWeatherData(cityId);
   if (!data || !data.list || !data.list[0]) {
-    console.error("Weather data missing for cityId:", cityId);
-    return {
-      html: "<div>Fehler beim Laden der Wetterdaten</div>",
-      weatherData: null,
-    };
+    console.error("Fehler beim Laden der Wetterdaten für Stadt-ID:", cityId);
+    alert("Fehler beim Laden der Wetterdaten für Stadt-ID: " + cityId);
   }
 
   const weatherData = {
@@ -40,6 +37,7 @@ export async function weatherOverview(data) {
       country,
       sunrise,
       sunset,
+      timezone,
     },
 
     list: [
@@ -75,7 +73,8 @@ export async function weatherOverview(data) {
         temp_min,
         pod,
         sunrise,
-        sunset
+        sunset,
+        timezone
       )}
       ${panelOptions(description, weatherId, isFavorite)}
   </div>
@@ -90,7 +89,7 @@ export async function weatherOverview(data) {
            .map((item) =>
              forecastItem(
                item.weather[0].icon,
-               new Date(item.dt * 1000).getHours() + " Uhr",
+               timeFormatter(item.dt, timezone) + " Uhr",
                Math.round(item.main.temp)
              )
            )
@@ -102,7 +101,9 @@ export async function weatherOverview(data) {
            // Gruppierung nach Tag
            const groupedByDay = {};
            data.list.forEach((item) => {
-             const date = new Date(item.dt * 1000).toDateString();
+             const date = new Date((item.dt + timezone) * 1000)
+               .toISOString()
+               .split("T")[0];
              if (!groupedByDay[date]) {
                groupedByDay[date] = [];
              }
@@ -118,7 +119,7 @@ export async function weatherOverview(data) {
                  .map((item) =>
                    forecastItem(
                      item.weather[0].icon,
-                     new Date(item.dt * 1000).getHours() + " Uhr",
+                     timeFormatter(item.dt, timezone) + " Uhr",
                      Math.round(item.main.temp)
                    )
                  )
@@ -144,7 +145,7 @@ export async function weatherOverview(data) {
 
                return forcastDayItem(
                  items[0].weather[0].icon,
-                 dayFormatter(items[0].dt),
+                 dayFormatter(items[0].dt, timezone),
                  Math.round(Math.min(...temps)),
                  Math.round(Math.max(...temps)),
                  items[0].weather[0].description,

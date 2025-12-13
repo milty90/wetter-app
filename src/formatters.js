@@ -1,15 +1,23 @@
-export function dateFormatter(timestamp) {
-  const date = new Date(timestamp * 1000);
-  const day = date.getDate().toString().padStart(2, "0");
-  const month = (date.getMonth() + 1).toString().padStart(2, "0");
-  const ours = date.getHours().toString().padStart(2, "0");
-  const minutes = date.getMinutes().toString().padStart(2, "0");
-
-  return `Heute, ${month}. ${day}. um ${ours}:${minutes}`;
+export function dateFormatter(timestamp, timezoneOffset) {
+  let date;
+  if (timezoneOffset !== undefined) {
+    date = new Date((timestamp + timezoneOffset) * 1000);
+    const day = date.getUTCDate().toString().padStart(2, "0");
+    const month = (date.getUTCMonth() + 1).toString().padStart(2, "0");
+    const ours = date.getUTCHours().toString().padStart(2, "0");
+    const minutes = date.getUTCMinutes().toString().padStart(2, "0");
+    return `Heute, ${month}. ${day}. um ${ours}:${minutes}`;
+  } else {
+    date = new Date(timestamp * 1000);
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const ours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+    return `Heute, ${month}. ${day}. um ${ours}:${minutes}`;
+  }
 }
 
-export function dayFormatter(timestamp) {
-  const date = new Date(timestamp * 1000);
+export function dayFormatter(timestamp, timezoneOffset) {
   const days = [
     "Sonntag",
     "Montag",
@@ -19,18 +27,39 @@ export function dayFormatter(timestamp) {
     "Freitag",
     "Samstag",
   ];
-  return days[date.getDay()];
+  let date;
+  if (timezoneOffset !== undefined) {
+    date = new Date((timestamp + timezoneOffset) * 1000);
+    return days[date.getUTCDay()];
+  } else {
+    date = new Date(timestamp * 1000);
+    return days[date.getDay()];
+  }
 }
 
-export function timeFormatter(timestamp) {
-  const date = new Date(timestamp * 1000);
-  const hours = date.getHours().toString().padStart(2, "0");
-  const minutes = date.getMinutes().toString().padStart(2, "0");
-  return `${hours}:${minutes}`;
+export function timeFormatter(timestamp, timezoneOffset) {
+  let date;
+  if (timezoneOffset !== undefined) {
+    date = new Date((timestamp + timezoneOffset) * 1000);
+    const hours = date.getUTCHours().toString().padStart(2, "0");
+    const minutes = date.getUTCMinutes().toString().padStart(2, "0");
+    return `${hours}:${minutes}`;
+  } else {
+    date = new Date(timestamp * 1000);
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+    return `${hours}:${minutes}`;
+  }
 }
 
 export function cityNameCutter(city) {
-  const cityWithoutParentheses = city.split("(")[0].trim();
+  let cityWithoutParentheses = city.split("(")[0].trim();
+
+  if (cityWithoutParentheses.endsWith(" City")) {
+    cityWithoutParentheses = cityWithoutParentheses.slice(0, -5).trim();
+  } else if (cityWithoutParentheses.endsWith(" city")) {
+    cityWithoutParentheses = cityWithoutParentheses.slice(0, -5).trim();
+  }
 
   if (!cityWithoutParentheses.includes(" ")) {
     return cityWithoutParentheses;
@@ -52,12 +81,12 @@ export function cityNameCutter(city) {
   return result.join(" ");
 }
 
-export function locationFormatter(location) {
-  const parts = location.split(",");
-  const lat = parts[0].trim();
-  const lon = parts[1] ? parts[1].trim() : "";
-  return { lat, lon };
-}
+// export function locationFormatter(location) {
+//   const parts = location.split(",");
+//   const lat = parts[0].trim();
+//   const lon = parts[1] ? parts[1].trim() : "";
+//   return { lat, lon };
+// }
 
 export function escapeHtml(str) {
   if (str == null) return "";

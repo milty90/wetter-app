@@ -9,7 +9,8 @@ export function panelOverview(
   temp_min,
   pod,
   sunrise,
-  sunset
+  sunset,
+  timezone
 ) {
   return `<div class="weather-panel__overview">
         <div class="weather-panel__header">
@@ -23,7 +24,10 @@ export function panelOverview(
   )}, 
           ${country}</p>
         </div>
-        <p class="weather-panel__current-date">${dateFormatter(dt)}</p>
+        <p class="weather-panel__current-date">${dateFormatter(
+          dt,
+          timezone
+        )}</p>
         <div class="weather-panel__temp-container">
           <p class="weather-panel__temperature">${temp.toFixed(0)}</p>
           <p class="weather-panel__temperature-unit">°C</p>

@@ -3,6 +3,7 @@
 @use "../styles/mixins" as *;
 @use "menustyle" as *;
 @use "searchstyle" as *;
+@use "utilities" as *;
 
 * {
   padding: 0;
@@ -604,6 +605,7 @@ body {
       transform: translateY(0);
     }
   }
+
   &__body-detail-item {
     display: flex;
     flex-direction: column;
@@ -674,6 +676,7 @@ body {
       transform: scaleX(1);
     }
   }
+
   &__hourlyItems {
     display: none;
     flex-direction: row;
@@ -693,38 +696,6 @@ body {
     &.show {
       opacity: 1;
       transform: translateY(0);
-    }
-  }
-}
-
-.weather-panel {
-  &__button {
-    &--hidden {
-      display: none !important;
-    }
-
-    &--rotate-exit {
-      @include button-rotate-exit;
-    }
-
-    &--fade-in {
-      @include button-fade-in(0ms);
-
-      &.delay-50 {
-        animation-delay: 50ms;
-      }
-
-      &.delay-100 {
-        animation-delay: 100ms;
-      }
-
-      &.delay-150 {
-        animation-delay: 150ms;
-      }
-    }
-
-    &--fade-out {
-      @include button-fade-out;
     }
   }
 }

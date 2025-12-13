@@ -8,7 +8,7 @@ import { deleteSavedCity } from "./localStateManager";
 import { searchView } from "./searchView.js";
 import { searchCities } from "./wetterApi.js";
 import { getIdbyLocationandCountry } from "./wetterApi.js";
-import { cityNameCutter, locationFormatter } from "./formatters.js";
+import { cityNameCutter } from "./formatters.js";
 
 async function init() {
   const menuHtml = await getMenuOverview();
@@ -42,11 +42,10 @@ function setupEventListeners() {
     ".weather-forecast__arrow-up-icon"
   );
 
-  if (arrowUpIcons) {
-    if (!arrowDownIcons) return;
+  if (arrowUpIcons.length > 0 && arrowDownIcons.length > 0) {
     arrowUpIcons.forEach((arrowUpIcon, index) => {
       const arrowDownIcon = arrowDownIcons[index];
-      const dayItem = arrowUpIcon.closest(".weather-forecast__dayItem-body");
+      const dayItem = arrowUpIcon.closest(".weather-forecast__dayItem");
       const bodyDetails = dayItem?.querySelector(
         ".weather-forecast__body-details"
       );
@@ -57,27 +56,39 @@ function setupEventListeners() {
         ".weather-forecast__dayItem-body-divider"
       );
 
-      arrowUpIcon.addEventListener("click", () => {
-        if (bodyDetails) bodyDetails.classList.remove("show");
-        if (hourlyItems) hourlyItems.classList.remove("show");
-        if (divider) divider.classList.remove("show");
+      arrowUpIcon.addEventListener(
+        "click",
+        () => {
+          if (bodyDetails) bodyDetails.classList.remove("show");
+          if (hourlyItems) hourlyItems.classList.remove("show");
+          if (divider) divider.classList.remove("show");
 
-        setTimeout(
-          () => {
-            arrowUpIcon.style.display = "none";
-            if (arrowDownIcon) arrowDownIcon.style.display = "flex";
-            if (bodyDetails) bodyDetails.style.display = "none";
-            if (hourlyItems) hourlyItems.style.display = "none";
-            if (divider) divider.style.display = "none";
-          },
-          { signal }
-        );
-      });
+          setTimeout(() => {
+            arrowUpIcon.classList.add("u-hidden");
+            arrowUpIcon.classList.remove("u-flex");
+
+            if (arrowDownIcon) {
+              arrowDownIcon.classList.remove("u-hidden");
+              arrowDownIcon.classList.add("u-flex");
+            }
+            if (bodyDetails) {
+              bodyDetails.classList.add("u-hidden");
+              bodyDetails.classList.remove("u-flex");
+            }
+            if (hourlyItems) {
+              hourlyItems.classList.add("u-hidden");
+              hourlyItems.classList.remove("u-flex");
+            }
+            if (divider) {
+              divider.classList.add("u-hidden");
+              divider.classList.remove("u-block");
+            }
+          }, 100);
+        },
+        { signal }
+      );
     });
-  }
 
-  if (arrowDownIcons) {
-    if (!arrowUpIcons) return;
     arrowDownIcons.forEach((arrowDownIcon, index) => {
       const arrowUpIcon = arrowUpIcons[index];
       const dayItem = arrowDownIcon.closest(".weather-forecast__dayItem");
@@ -91,23 +102,38 @@ function setupEventListeners() {
         ".weather-forecast__dayItem-body-divider"
       );
 
-      arrowDownIcon.addEventListener("click", () => {
-        arrowDownIcon.style.display = "none";
-        if (arrowUpIcon) arrowUpIcon.style.display = "flex";
+      arrowDownIcon.addEventListener(
+        "click",
+        () => {
+          arrowDownIcon.classList.add("u-hidden");
+          arrowDownIcon.classList.remove("u-flex");
 
-        if (bodyDetails) bodyDetails.style.display = "flex";
-        if (hourlyItems) hourlyItems.style.display = "flex";
-        if (divider) divider.style.display = "block";
+          if (arrowUpIcon) {
+            arrowUpIcon.classList.remove("u-hidden");
+            arrowUpIcon.classList.add("u-flex");
+          }
 
-        setTimeout(
-          () => {
+          if (bodyDetails) {
+            bodyDetails.classList.remove("u-hidden");
+            bodyDetails.classList.add("u-flex");
+          }
+          if (hourlyItems) {
+            hourlyItems.classList.remove("u-hidden");
+            hourlyItems.classList.add("u-flex");
+          }
+          if (divider) {
+            divider.classList.remove("u-hidden");
+            divider.classList.add("u-block");
+          }
+
+          setTimeout(() => {
             if (bodyDetails) bodyDetails.classList.add("show");
             if (hourlyItems) hourlyItems.classList.add("show");
             if (divider) divider.classList.add("show");
-          },
-          { signal }
-        );
-      });
+          }, 100);
+        },
+        { signal }
+      );
     });
   }
 
@@ -120,7 +146,6 @@ function setupEventListeners() {
   const menuItemIcons = document.querySelectorAll(".menu-item__icon");
   const deleteIcons = document.querySelectorAll(".menu-item__delete-icon");
   const searchButton = document.querySelector(".search-container__button");
-  const city = document.querySelector(".weather-panel__header-location");
   const cityIdAttr = document.querySelector(".weather-panel");
 
   if (
@@ -135,19 +160,43 @@ function setupEventListeners() {
         weatherForecastContainer.classList.add("with-sticky-header");
         weatherForecastTitle.classList.add("with-sticky-header");
 
-        if (menuButton) menuButton.style.display = "none";
-        if (cancelButton) cancelButton.style.display = "none";
-        if (favoriteButton) favoriteButton.style.display = "none";
-        if (arrowButton) arrowButton.style.display = "none";
+        if (menuButton) {
+          menuButton.classList.add("u-hidden");
+          menuButton.classList.remove("u-block");
+        }
+        if (cancelButton) {
+          cancelButton.classList.add("u-hidden");
+          cancelButton.classList.remove("u-block");
+        }
+        if (favoriteButton) {
+          favoriteButton.classList.add("u-hidden");
+          favoriteButton.classList.remove("u-block");
+        }
+        if (arrowButton) {
+          arrowButton.classList.add("u-hidden");
+          arrowButton.classList.remove("u-block");
+        }
       } else {
         weatherPanel.classList.remove("weather-panel--sticky");
         weatherForecastContainer.classList.remove("with-sticky-header");
         weatherForecastTitle.classList.remove("with-sticky-header");
 
-        if (menuButton) menuButton.style.display = "block";
-        if (cancelButton) cancelButton.style.display = "none";
-        if (favoriteButton) favoriteButton.style.display = "none";
-        if (arrowButton) arrowButton.style.display = "none";
+        if (menuButton) {
+          menuButton.classList.remove("u-hidden");
+          menuButton.classList.add("u-block");
+        }
+        if (cancelButton) {
+          cancelButton.classList.add("u-hidden");
+          cancelButton.classList.remove("u-block");
+        }
+        if (favoriteButton) {
+          favoriteButton.classList.add("u-hidden");
+          favoriteButton.classList.remove("u-block");
+        }
+        if (arrowButton) {
+          arrowButton.classList.add("u-hidden");
+          arrowButton.classList.remove("u-block");
+        }
       }
     });
   }
@@ -158,27 +207,58 @@ function setupEventListeners() {
         return;
       }
 
-      menuButton.style.transform = "rotate(90deg) scale(0.8)";
+      menuButton.classList.add("u-rotate-exit");
+      menuButton.classList.remove("u-transform-reset");
+
       setTimeout(() => {
-        menuButton.style.display = "none";
-        menuButton.style.transform = "";
+        menuButton.classList.add("u-hidden");
+        menuButton.classList.remove("u-block");
+        menuButton.classList.remove("u-rotate-exit");
+        menuButton.classList.add("u-transform-reset");
 
-        if (cancelButton) cancelButton.style.display = "block";
-        if (arrowButton) arrowButton.style.display = "block";
-        if (favoriteButton) favoriteButton.style.display = "block";
+        if (cancelButton) {
+          cancelButton.classList.remove("u-hidden");
+          cancelButton.classList.add("u-block");
+        }
+        if (arrowButton) {
+          arrowButton.classList.remove("u-hidden");
+          arrowButton.classList.add("u-block");
+        }
+        if (favoriteButton) {
+          favoriteButton.classList.remove("u-hidden");
+          favoriteButton.classList.add("u-block");
+        }
 
-        if (cancelButton) cancelButton.style.opacity = "0";
-        if (arrowButton) arrowButton.style.opacity = "0";
-        if (favoriteButton) favoriteButton.style.opacity = "0";
+        if (cancelButton) {
+          cancelButton.classList.add("u-opacity-0");
+          cancelButton.classList.remove("u-opacity-1");
+        }
+        if (arrowButton) {
+          arrowButton.classList.add("u-opacity-0");
+          arrowButton.classList.remove("u-opacity-1");
+        }
+        if (favoriteButton) {
+          favoriteButton.classList.add("u-opacity-0");
+          favoriteButton.classList.remove("u-opacity-1");
+        }
 
         setTimeout(() => {
-          if (cancelButton) cancelButton.style.opacity = "1";
+          if (cancelButton) {
+            cancelButton.classList.remove("u-opacity-0");
+            cancelButton.classList.add("u-opacity-1");
+          }
         }, 50);
         setTimeout(() => {
-          if (arrowButton) arrowButton.style.opacity = "1";
+          if (arrowButton) {
+            arrowButton.classList.remove("u-opacity-0");
+            arrowButton.classList.add("u-opacity-1");
+          }
         }, 100);
         setTimeout(() => {
-          if (favoriteButton) favoriteButton.style.opacity = "1";
+          if (favoriteButton) {
+            favoriteButton.classList.remove("u-opacity-0");
+            favoriteButton.classList.add("u-opacity-1");
+          }
         }, 150);
       }, 150);
     });
@@ -186,18 +266,31 @@ function setupEventListeners() {
 
   if (cancelButton) {
     cancelButton.addEventListener("click", () => {
-      cancelButton.style.transform = "rotate(90deg) scale(0.8)";
+      cancelButton.classList.add("u-rotate-exit");
+      cancelButton.classList.remove("u-transform-reset");
 
       setTimeout(() => {
-        if (arrowButton) arrowButton.style.display = "none";
-        if (favoriteButton) favoriteButton.style.display = "none";
-        cancelButton.style.display = "none";
-        cancelButton.style.transform = "";
+        if (arrowButton) {
+          arrowButton.classList.add("u-hidden");
+          arrowButton.classList.remove("u-block");
+        }
+        if (favoriteButton) {
+          favoriteButton.classList.add("u-hidden");
+          favoriteButton.classList.remove("u-block");
+        }
+        cancelButton.classList.add("u-hidden");
+        cancelButton.classList.remove("u-block");
+        cancelButton.classList.remove("u-rotate-exit");
+        cancelButton.classList.add("u-transform-reset");
 
-        menuButton.style.display = "block";
-        menuButton.style.opacity = "0";
+        menuButton.classList.remove("u-hidden");
+        menuButton.classList.add("u-block");
+        menuButton.classList.add("u-opacity-0");
+        menuButton.classList.remove("u-opacity-1");
+
         setTimeout(() => {
-          menuButton.style.opacity = "1";
+          menuButton.classList.remove("u-opacity-0");
+          menuButton.classList.add("u-opacity-1");
         }, 50);
       }, 150);
     });
@@ -227,19 +320,23 @@ function setupEventListeners() {
     editButton.addEventListener("click", () => {
       if (!isEditing) {
         menuItemIcons.forEach((icon) => {
-          icon.style.display = "none";
+          icon.classList.add("u-hidden");
+          icon.classList.remove("u-block");
         });
         deleteIcons.forEach((deleteIcon) => {
-          deleteIcon.style.display = "block";
+          deleteIcon.classList.remove("u-hidden");
+          deleteIcon.classList.add("u-block");
         });
         editButton.textContent = "Fertig";
         isEditing = true;
       } else {
         menuItemIcons.forEach((icon) => {
-          icon.style.display = "block";
+          icon.classList.remove("u-hidden");
+          icon.classList.add("u-block");
         });
         deleteIcons.forEach((deleteIcon) => {
-          deleteIcon.style.display = "none";
+          deleteIcon.classList.add("u-hidden");
+          deleteIcon.classList.remove("u-block");
         });
         editButton.textContent = "Bearbeiten";
         isEditing = false;
@@ -267,8 +364,6 @@ function setupEventListeners() {
         const locationElement = item.querySelector(".menu-item__location");
         const cityName = locationElement.textContent;
         const cityId = item.getAttribute("data-city-id");
-
-        console.log("cityName on click: ", cityId, cityName);
 
         getWeatherOverview(cityId, cityName).then(({ html, weatherData }) => {
           document.querySelector("#app").innerHTML = html;
@@ -376,7 +471,7 @@ async function displaySearchResults(cities, resultsContainer) {
       const state = city.state ? `, ${city.state}` : "";
       const geoLat = city.lat;
       const geoLon = city.lon;
-      console.log("city in search results: ", city);
+
       return `
       <div class="search-view__result-item" data-geo-lat="${geoLat}" data-geo-lon="${geoLon}" data-city="${city.name}" data-country="${country}">
         <div class="search-view__result-name">${city.name}</div>

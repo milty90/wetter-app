@@ -1,0 +1,31 @@
+.u-hidden {
+  display: none !important;
+}
+
+.u-flex {
+  display: flex !important;
+}
+
+.u-block {
+  display: block !important;
+}
+
+.u-opacity-0 {
+  opacity: 0 !important;
+  transition: opacity 0.2s ease;
+}
+
+.u-opacity-1 {
+  opacity: 1 !important;
+  transition: opacity 0.2s ease;
+}
+
+.u-rotate-exit {
+  transform: rotate(90deg) scale(0.8) !important;
+  transition: transform 0.15s ease;
+}
+
+.u-transform-reset {
+  transform: none !important;
+  transition: transform 0.15s ease;
+}

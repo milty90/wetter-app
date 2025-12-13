@@ -1,5 +1,5 @@
 import { getBackgroundImage } from "./backgroundManager";
-import { cityNameCutter, locationFormatter } from "./formatters";
+import { cityNameCutter } from "./formatters";
 import { renderLoadingScreen } from "./loadingScreen";
 import { getSavedCities } from "./localStateManager";
 import { getWeatherData } from "./wetterApi";
@@ -13,7 +13,7 @@ export async function getMenuOverview() {
   for (let cityId of cities) {
     const data = await getWeatherData(cityId);
 
-    console.log("data in menu overview: ", data);
+    console.log("Daten in Menüübersicht: ", data);
 
     if (data && data.city && data.list && data.list[0]) {
       const bgImage = getBackgroundImage(

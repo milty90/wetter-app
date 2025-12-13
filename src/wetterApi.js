@@ -3,21 +3,18 @@ const BASE_URL = "https://api.openweathermap.org/data/2.5/";
 const GEO_URL = "https://api.openweathermap.org/geo/1.0/";
 
 export async function getWeatherData(id) {
-  // const apiUrl = `${BASE_URL}forecast?q=${location},${country}&appid=${API_KEY}&units=metric&lang=de`;
-  // const apiUrl = `${BASE_URL}forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&lang=de`;
-  console.log("Fetching weather data for city ID: ", id);
-
+  console.log("Wetterdaten für Stadt-ID werden abgerufen: ", id);
   const apiUrl = `${BASE_URL}forecast?id=${id}&appid=${API_KEY}&units=metric&lang=de`;
 
   try {
     const response = await fetch(apiUrl);
     if (!response.ok) {
-      throw new Error("Could not fetch weather data");
+      throw new Error("Die Wetterdaten konnten nicht abgerufen werden.");
     }
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Error fetching weather data:", error);
+    console.error("Fehler beim Abrufen der Wetterdaten:", error);
     return null;
   }
 }
@@ -28,7 +25,7 @@ export async function getIdbyLocationandCountry(cityName, country) {
   )},${country}&appid=${API_KEY}&units=metric&lang=de`;
   const resp = await fetch(forecastUrl);
   if (!resp.ok) {
-    console.error("Could not fetch forecast data for ID retrieval");
+    console.error("Die Daten für den ID-Abruf konnten nicht abgerufen werden.");
     return;
   }
   const forecastData = await resp.json();
@@ -37,10 +34,11 @@ export async function getIdbyLocationandCountry(cityName, country) {
 
 export async function searchCities(query) {
   const url = `${GEO_URL}direct?q=${query}&limit=5&appid=${API_KEY}`;
-
   const response = await fetch(url);
   if (!response.ok) {
-    throw new Error("Could not fetch city data");
+    throw new Error(
+      "Die Daten für die Stadtsuche konnten nicht abgerufen werden."
+    );
   }
   return await response.json();
 }
