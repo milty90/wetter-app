@@ -1,6 +1,6 @@
 import "/styles/style.scss";
 import "/src/wetterApi.js";
-import { getWeatherOverview } from "./weatherOverview.js";
+import { getWeatherOverview } from "./WeatherOverview.js";
 import { getMenuOverview } from "./menuOverview";
 import { setBackground } from "./backgroundManager";
 import { saveCityInLocalState } from "./localStateManager";
