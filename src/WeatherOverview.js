@@ -124,7 +124,6 @@ export async function weatherOverview(data, currentData) {
            <p class="weather-forecast__title-Days ">Die nächsten 4 Tage:</p>
            <div class="weather-forecast__dayItems">
          ${(() => {
-           // Gruppierung nach Tag
            const groupedByDay = {};
            data.list.forEach((item) => {
              const date = new Date((item.dt + timezone) * 1000)

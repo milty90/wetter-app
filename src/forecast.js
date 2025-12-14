@@ -7,7 +7,7 @@ export function forecastItem(icon, time, temp) {
           alt="Clear Sky"/>
           <div class="weather-forecast__item">
             <p class="weather-forecast__item__time">${time}</p>
-            <p class="weather-forecast__item__temp">${temp}°C</p>
+            <p class="weather-forecast__item__temp">${temp}°</p>
           </div>  
         </div>`;
 }

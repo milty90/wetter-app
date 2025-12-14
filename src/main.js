@@ -567,8 +567,8 @@ async function displaySearchResults(cities, resultsContainer) {
         document.querySelector("#app").innerHTML = html;
         setBackground(
           currentWeatherData.currentId,
-          weatherData.dt,
-          weatherData.sys
+          currentWeatherData.currentDt,
+          currentWeatherData.currentSys
         );
         closeSearchModal();
         requestAnimationFrame(() => setupEventListeners());
