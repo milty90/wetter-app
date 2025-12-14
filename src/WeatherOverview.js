@@ -2,7 +2,7 @@ import { panelOverview } from "./panelOverview";
 import { panelOptions } from "./panelOptions";
 import { panelDetails } from "./panelDetails";
 import { getWeatherData, getCurrentWeatherData } from "./wetterApi";
-import { forecastItem, forcastDayItem } from "./forcast";
+import { forecastItem, forcastDayItem } from "./forecast";
 import { renderLoadingScreen } from "./loadingScreen";
 import { dayFormatter, hourFormatter, escapeHtml } from "./formatters";
 import { bodyDetails } from "./bodyDetails";
@@ -33,7 +33,7 @@ export async function getWeatherOverview(cityId, city) {
   }
 
   const currentWeatherData = {
-    currenCity: city,
+    currentCity: city,
     currentTimezone: currentData.timezone,
     currentId: currentData.weather[0].id,
     currentDt: currentData.dt,
@@ -68,14 +68,14 @@ export async function weatherOverview(data, currentData) {
   } = data || {};
 
   const {
-    name: currenCity,
+    name: currentCity,
     timezone: currentTimezone,
     weather: [{ id: currentWeatherId, description: currentDescription }],
     dt: currentDt,
   } = currentData || {};
 
   console.log("currentData in weatherOverview: ", currentData);
-  console.log("currenCity: ", currenCity);
+  console.log("currentCity: ", currentCity);
 
   const savedCities = getSavedCities();
 
@@ -92,7 +92,7 @@ export async function weatherOverview(data, currentData) {
   )}">
 
       ${panelOverview(
-        currenCity,
+        currentCity,
         country,
         currentDt,
         temp,

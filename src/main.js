@@ -1,6 +1,6 @@
 import "/styles/style.scss";
 import "/src/wetterApi.js";
-import { getWeatherOverview } from "./WeatherOverview.js";
+import { getWeatherOverview } from "./weatherOverview.js";
 import { getMenuOverview } from "./menuOverview";
 import { setBackground } from "./backgroundManager";
 import { saveCityInLocalState } from "./localStateManager";
@@ -207,14 +207,20 @@ function setupEventListeners() {
         return;
       }
 
-      menuButton.classList.add("u-rotate-exit");
-      menuButton.classList.remove("u-transform-reset");
+      menuButton.classList.add("weather-panel__option-button--rotating-exit");
+      menuButton.classList.remove(
+        "weather-panel__option-button--rotation-reset"
+      );
 
       setTimeout(() => {
         menuButton.classList.add("u-hidden");
         menuButton.classList.remove("u-block");
-        menuButton.classList.remove("u-rotate-exit");
-        menuButton.classList.add("u-transform-reset");
+        menuButton.classList.remove(
+          "weather-panel__option-button--rotating-exit"
+        );
+        menuButton.classList.add(
+          "weather-panel__option-button--rotation-reset"
+        );
 
         if (cancelButton) {
           cancelButton.classList.remove("u-hidden");
@@ -230,34 +236,56 @@ function setupEventListeners() {
         }
 
         if (cancelButton) {
-          cancelButton.classList.add("u-opacity-0");
-          cancelButton.classList.remove("u-opacity-1");
+          cancelButton.classList.add(
+            "weather-panel__option-button--fading-out"
+          );
+          cancelButton.classList.remove(
+            "weather-panel__option-button--fading-in"
+          );
         }
         if (arrowButton) {
-          arrowButton.classList.add("u-opacity-0");
-          arrowButton.classList.remove("u-opacity-1");
+          arrowButton.classList.add("weather-panel__option-button--fading-out");
+          arrowButton.classList.remove(
+            "weather-panel__option-button--fading-in"
+          );
         }
         if (favoriteButton) {
-          favoriteButton.classList.add("u-opacity-0");
-          favoriteButton.classList.remove("u-opacity-1");
+          favoriteButton.classList.add(
+            "weather-panel__option-button--fading-out"
+          );
+          favoriteButton.classList.remove(
+            "weather-panel__option-button--fading-in"
+          );
         }
 
         setTimeout(() => {
           if (cancelButton) {
-            cancelButton.classList.remove("u-opacity-0");
-            cancelButton.classList.add("u-opacity-1");
+            cancelButton.classList.remove(
+              "weather-panel__option-button--fading-out"
+            );
+            cancelButton.classList.add(
+              "weather-panel__option-button--fading-in"
+            );
           }
         }, 50);
         setTimeout(() => {
           if (arrowButton) {
-            arrowButton.classList.remove("u-opacity-0");
-            arrowButton.classList.add("u-opacity-1");
+            arrowButton.classList.remove(
+              "weather-panel__option-button--fading-out"
+            );
+            arrowButton.classList.add(
+              "weather-panel__option-button--fading-in"
+            );
           }
         }, 100);
         setTimeout(() => {
           if (favoriteButton) {
-            favoriteButton.classList.remove("u-opacity-0");
-            favoriteButton.classList.add("u-opacity-1");
+            favoriteButton.classList.remove(
+              "weather-panel__option-button--fading-out"
+            );
+            favoriteButton.classList.add(
+              "weather-panel__option-button--fading-in"
+            );
           }
         }, 150);
       }, 150);
@@ -266,8 +294,10 @@ function setupEventListeners() {
 
   if (cancelButton) {
     cancelButton.addEventListener("click", () => {
-      cancelButton.classList.add("u-rotate-exit");
-      cancelButton.classList.remove("u-transform-reset");
+      cancelButton.classList.add("weather-panel__option-button--rotating-exit");
+      cancelButton.classList.remove(
+        "weather-panel__option-button--rotation-reset"
+      );
 
       setTimeout(() => {
         if (arrowButton) {
@@ -280,17 +310,23 @@ function setupEventListeners() {
         }
         cancelButton.classList.add("u-hidden");
         cancelButton.classList.remove("u-block");
-        cancelButton.classList.remove("u-rotate-exit");
-        cancelButton.classList.add("u-transform-reset");
+        cancelButton.classList.remove(
+          "weather-panel__option-button--rotating-exit"
+        );
+        cancelButton.classList.add(
+          "weather-panel__option-button--rotation-reset"
+        );
 
         menuButton.classList.remove("u-hidden");
         menuButton.classList.add("u-block");
-        menuButton.classList.add("u-opacity-0");
-        menuButton.classList.remove("u-opacity-1");
+        menuButton.classList.add("weather-panel__option-button--fading-out");
+        menuButton.classList.remove("weather-panel__option-button--fading-in");
 
         setTimeout(() => {
-          menuButton.classList.remove("u-opacity-0");
-          menuButton.classList.add("u-opacity-1");
+          menuButton.classList.remove(
+            "weather-panel__option-button--fading-out"
+          );
+          menuButton.classList.add("weather-panel__option-button--fading-in");
         }, 50);
       }, 150);
     });
@@ -531,8 +567,8 @@ async function displaySearchResults(cities, resultsContainer) {
         document.querySelector("#app").innerHTML = html;
         setBackground(
           currentWeatherData.currentId,
-          currentWeatherData.currentDt,
-          currentWeatherData.currentSys
+          weatherData.dt,
+          weatherData.sys
         );
         closeSearchModal();
         requestAnimationFrame(() => setupEventListeners());
