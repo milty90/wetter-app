@@ -477,7 +477,7 @@ function openSearchModal() {
         searchResults.innerHTML =
           '<div class="search-view__error">Bei der Suche ist ein Fehler aufgetreten.</div>';
       }
-    }, 200);
+    }, 500);
   });
 
   searchInput.addEventListener("keypress", (e) => {
