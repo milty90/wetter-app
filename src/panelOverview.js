@@ -3,14 +3,13 @@ import { dateFormatter, timeFormatter, cityNameCutter } from "./formatters";
 export function panelOverview(
   city,
   country,
-  dt,
+  currentDt,
   temp,
   temp_max,
   temp_min,
-  pod,
   sunrise,
   sunset,
-  timezone
+  currentTimezone
 ) {
   return `<div class="weather-panel__overview">
         <div class="weather-panel__header">
@@ -25,8 +24,8 @@ export function panelOverview(
           ${country}</p>
         </div>
         <p class="weather-panel__current-date">${dateFormatter(
-          dt,
-          timezone
+          currentDt,
+          currentTimezone
         )}</p>
         <div class="weather-panel__temp-container">
           <p class="weather-panel__temperature">${temp.toFixed(0)}</p>

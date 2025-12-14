@@ -19,16 +19,34 @@ export async function getWeatherData(id) {
   }
 }
 
+export async function getCurrentWeatherData(id) {
+  console.log("Aktuelle Wetterdaten für Stadt-ID werden abgerufen: ", id);
+  const apiUrl = `${BASE_URL}weather?id=${id}&appid=${API_KEY}&units=metric&lang=de`;
+  try {
+    const response = await fetch(apiUrl);
+    if (!response.ok) {
+      throw new Error(
+        "Die aktuellen Wetterdaten konnten nicht abgerufen werden."
+      );
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Fehler beim Abrufen der aktuellen Wetterdaten:", error);
+    return null;
+  }
+}
+
 export async function getIdbyLocationandCountry(cityName, country) {
   const forecastUrl = `${BASE_URL}forecast?q=${encodeURIComponent(
     cityName
   )},${country}&appid=${API_KEY}&units=metric&lang=de`;
-  const resp = await fetch(forecastUrl);
-  if (!resp.ok) {
+  const response = await fetch(forecastUrl);
+  if (!response.ok) {
     console.error("Die Daten für den ID-Abruf konnten nicht abgerufen werden.");
     return;
   }
-  const forecastData = await resp.json();
+  const forecastData = await response.json();
   return forecastData?.city?.id;
 }
 

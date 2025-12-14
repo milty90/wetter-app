@@ -2,7 +2,7 @@ import { getBackgroundImage } from "./backgroundManager";
 import { cityNameCutter } from "./formatters";
 import { renderLoadingScreen } from "./loadingScreen";
 import { getSavedCities } from "./localStateManager";
-import { getWeatherData } from "./wetterApi";
+import { getCurrentWeatherData, getWeatherData } from "./wetterApi";
 
 export async function getMenuOverview() {
   renderLoadingScreen();
@@ -12,24 +12,30 @@ export async function getMenuOverview() {
 
   for (let cityId of cities) {
     const data = await getWeatherData(cityId);
+    const currentData = await getCurrentWeatherData(cityId);
 
-    console.log("Daten in Menüübersicht: ", data);
+    console.log("Daten in Menüübersicht: ", currentData);
 
-    if (data && data.city && data.list && data.list[0]) {
+    if (
+      currentData &&
+      currentData.name &&
+      currentData.weather &&
+      currentData.weather[0]
+    ) {
       const bgImage = getBackgroundImage(
-        data.list[0].weather[0].id,
-        data.list[0].dt,
+        currentData.weather[0].id,
+        currentData.dt,
         data.list[0].sys.pod
       );
 
       cards.push(
         cardItem(
-          data.city.id,
-          data.city.name,
-          data.list[0].weather[0].description,
-          data.city.country,
-          Math.round(data.list[0].main.temp),
-          data.list[0].weather[0].icon,
+          currentData.id,
+          currentData.name,
+          currentData.weather[0].description,
+          currentData.sys.country,
+          Math.round(currentData.main.temp),
+          currentData.weather[0].icon,
           bgImage
         )
       );
@@ -46,8 +52,12 @@ export function menuOverview(cardsHtml) {
     <h1 class="menu-title">WETTER</h1>
   </div>
   <div class="menu-divider">
-    <p class="menu-divider__subtitle">Deine gespeicherten Orte</p>
-    <button class="menu-divider__button"> Bearbeiten </button>
+    ${
+      cardsHtml
+        ? '<p class="menu-divider__subtitle">Deine gespeicherten Orte</p>'
+        : '<p class="menu-divider__subtitle">Keine gespeicherten Orte</p>'
+    }
+     <button class="menu-divider__button"> Bearbeiten </button>
     </div>
   <div class="menu-body"> 
     <div class="menu-body__list">

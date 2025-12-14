@@ -1,7 +1,7 @@
 import { panelOverview } from "./panelOverview";
 import { panelOptions } from "./panelOptions";
 import { panelDetails } from "./panelDetails";
-import { getWeatherData } from "./wetterApi";
+import { getWeatherData, getCurrentWeatherData } from "./wetterApi";
 import { forecastItem, forcastDayItem } from "./forcast";
 import { renderLoadingScreen } from "./loadingScreen";
 import { dayFormatter, timeFormatter, escapeHtml } from "./formatters";
@@ -14,21 +14,36 @@ export async function getWeatherOverview(cityId, city) {
   const data = await getWeatherData(cityId);
   if (!data || !data.list || !data.list[0]) {
     console.error("Fehler beim Laden der Wetterdaten für Stadt-ID:", cityId);
-    alert("Fehler beim Laden der Wetterdaten für Stadt-ID: " + cityId);
   }
-
   const weatherData = {
     city,
     id: data.list[0].weather[0].id,
     dt: data.list[0].dt,
     sys: data.list[0].sys.pod,
   };
-  const html = await weatherOverview(data);
-  return { html, weatherData };
+
+  const currentData = await getCurrentWeatherData(cityId);
+  if (!currentData) {
+    console.error(
+      "Fehler beim Laden der aktuellen Wetterdaten für Stadt-ID:",
+      cityId
+    );
+    return;
+  }
+
+  const currentWeatherData = {
+    currenCity: city,
+    currentTimezone: currentData.timezone,
+    currentId: currentData.weather[0].id,
+    currentDt: currentData.dt,
+    currentSys: currentData.sys.pod,
+  };
+
+  const html = await weatherOverview(data, currentData);
+  return { html, weatherData, currentWeatherData };
 }
 
-export async function weatherOverview(data) {
-  console.log("weatherOverview : ", data);
+export async function weatherOverview(data, currentData) {
   const {
     city: {
       name: city,
@@ -51,6 +66,16 @@ export async function weatherOverview(data) {
     ],
   } = data || {};
 
+  const {
+    name: currenCity,
+    timezone: currentTimezone,
+    weather: [{ id: currentWeatherId, description: currentDescription }],
+    dt: currentDt,
+  } = currentData || {};
+
+  console.log("currentData in weatherOverview: ", currentData);
+  console.log("currenCity: ", currenCity);
+
   const savedCities = getSavedCities();
 
   const isFavorite = savedCities.some(
@@ -64,19 +89,19 @@ export async function weatherOverview(data) {
   )}" data-geo-lat="${escapeHtml(String(latitude))}" data-geo-lon="${escapeHtml(
     String(longitude)
   )}">
+
       ${panelOverview(
-        city,
+        currenCity,
         country,
-        dt,
+        currentDt,
         temp,
         temp_max,
         temp_min,
-        pod,
         sunrise,
         sunset,
-        timezone
+        currentTimezone
       )}
-      ${panelOptions(description, weatherId, isFavorite)}
+      ${panelOptions(currentDescription, currentWeatherId, isFavorite)}
   </div>
   <div class="weather-details">
     ${panelDetails(speed, humidity, feels_like)}

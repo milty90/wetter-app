@@ -1,6 +1,6 @@
 import "/styles/style.scss";
 import "/src/wetterApi.js";
-import { getWeatherOverview } from "./WeatherOverview.js";
+import { getWeatherOverview } from "./weatherOverview.js";
 import { getMenuOverview } from "./menuOverview";
 import { setBackground } from "./backgroundManager";
 import { saveCityInLocalState } from "./localStateManager";
@@ -354,6 +354,14 @@ function setupEventListeners() {
 
         deleteSavedCity(cityId);
         menuItem.remove();
+
+        const remainingItems = document.querySelectorAll(".menu-item");
+        if (remainingItems.length === 0) {
+          const subtitle = document.querySelector(".menu-divider__subtitle");
+          if (subtitle) {
+            subtitle.textContent = "Keine gespeicherten Orte";
+          }
+        }
       });
     });
   }
@@ -365,11 +373,17 @@ function setupEventListeners() {
         const cityName = locationElement.textContent;
         const cityId = item.getAttribute("data-city-id");
 
-        getWeatherOverview(cityId, cityName).then(({ html, weatherData }) => {
-          document.querySelector("#app").innerHTML = html;
-          setBackground(weatherData.id, weatherData.dt, weatherData.sys);
-          setTimeout(() => setupEventListeners(), 200);
-        });
+        getWeatherOverview(cityId, cityName).then(
+          ({ html, weatherData, currentWeatherData }) => {
+            document.querySelector("#app").innerHTML = html;
+            setBackground(
+              currentWeatherData.currentId,
+              weatherData.dt,
+              weatherData.sys
+            );
+            setTimeout(() => setupEventListeners(), 200);
+          }
+        );
       });
     });
   }
@@ -493,12 +507,18 @@ async function displaySearchResults(cities, resultsContainer) {
           country
         );
 
-        getWeatherOverview(cityId, cityName).then(({ html, weatherData }) => {
-          document.querySelector("#app").innerHTML = html;
-          setBackground(weatherData.id, weatherData.dt, weatherData.sys);
-          closeSearchModal();
-          requestAnimationFrame(() => setupEventListeners());
-        });
+        getWeatherOverview(cityId, cityName).then(
+          ({ html, weatherData, currentWeatherData }) => {
+            document.querySelector("#app").innerHTML = html;
+            setBackground(
+              currentWeatherData.currentId,
+              weatherData.dt,
+              weatherData.sys
+            );
+            closeSearchModal();
+            requestAnimationFrame(() => setupEventListeners());
+          }
+        );
       });
     });
 }
