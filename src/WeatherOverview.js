@@ -4,7 +4,7 @@ import { panelDetails } from "./panelDetails";
 import { getWeatherData, getCurrentWeatherData } from "./wetterApi";
 import { forecastItem, forcastDayItem } from "./forcast";
 import { renderLoadingScreen } from "./loadingScreen";
-import { dayFormatter, timeFormatter, escapeHtml } from "./formatters";
+import { dayFormatter, hourFormatter, escapeHtml } from "./formatters";
 import { bodyDetails } from "./bodyDetails";
 import { getSavedCities } from "./localStateManager";
 
@@ -14,6 +14,7 @@ export async function getWeatherOverview(cityId, city) {
   const data = await getWeatherData(cityId);
   if (!data || !data.list || !data.list[0]) {
     console.error("Fehler beim Laden der Wetterdaten für Stadt-ID:", cityId);
+    return null;
   }
   const weatherData = {
     city,
@@ -28,7 +29,7 @@ export async function getWeatherOverview(cityId, city) {
       "Fehler beim Laden der aktuellen Wetterdaten für Stadt-ID:",
       cityId
     );
-    return;
+    return null;
   }
 
   const currentWeatherData = {
@@ -36,7 +37,7 @@ export async function getWeatherOverview(cityId, city) {
     currentTimezone: currentData.timezone,
     currentId: currentData.weather[0].id,
     currentDt: currentData.dt,
-    currentSys: currentData.sys.pod,
+    currentSys: currentData.weather[0].icon.slice(-1),
   };
 
   const html = await weatherOverview(data, currentData);
@@ -114,7 +115,7 @@ export async function weatherOverview(data, currentData) {
            .map((item) =>
              forecastItem(
                item.weather[0].icon,
-               timeFormatter(item.dt, timezone) + " Uhr",
+               hourFormatter(item.dt, timezone) + " Uhr",
                Math.round(item.main.temp)
              )
            )
@@ -144,7 +145,7 @@ export async function weatherOverview(data, currentData) {
                  .map((item) =>
                    forecastItem(
                      item.weather[0].icon,
-                     timeFormatter(item.dt, timezone) + " Uhr",
+                     hourFormatter(item.dt, timezone) + " Uhr",
                      Math.round(item.main.temp)
                    )
                  )

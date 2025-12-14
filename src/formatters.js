@@ -42,6 +42,21 @@ export function timeFormatter(timestamp, timezoneOffset) {
   if (timezoneOffset !== undefined) {
     date = new Date((timestamp + timezoneOffset) * 1000);
     const hours = date.getUTCHours().toString().padStart(2, "0");
+    const minutes = date.getUTCMinutes().toString().padStart(2, "0");
+    return `${hours}:${minutes}`;
+  } else {
+    date = new Date(timestamp * 1000);
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+    return `${hours}:${minutes}`;
+  }
+}
+
+export function hourFormatter(timestamp, timezoneOffset) {
+  let date;
+  if (timezoneOffset !== undefined) {
+    date = new Date((timestamp + timezoneOffset) * 1000);
+    const hours = date.getUTCHours().toString().padStart(2, "0");
     return `${hours}`;
   } else {
     date = new Date(timestamp * 1000);

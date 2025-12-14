@@ -25,7 +25,7 @@ export async function getMenuOverview() {
       const bgImage = getBackgroundImage(
         currentData.weather[0].id,
         currentData.dt,
-        data.list[0].sys.pod
+        currentData.weather[0].icon.slice(-1)
       );
 
       cards.push(

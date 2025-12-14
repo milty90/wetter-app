@@ -1,6 +1,6 @@
 import "/styles/style.scss";
 import "/src/wetterApi.js";
-import { getWeatherOverview } from "./weatherOverview.js";
+import { getWeatherOverview } from "./WeatherOverview.js";
 import { getMenuOverview } from "./menuOverview";
 import { setBackground } from "./backgroundManager";
 import { saveCityInLocalState } from "./localStateManager";
@@ -378,8 +378,8 @@ function setupEventListeners() {
             document.querySelector("#app").innerHTML = html;
             setBackground(
               currentWeatherData.currentId,
-              weatherData.dt,
-              weatherData.sys
+              currentWeatherData.currentDt,
+              currentWeatherData.currentSys
             );
             setTimeout(() => setupEventListeners(), 200);
           }
@@ -507,18 +507,35 @@ async function displaySearchResults(cities, resultsContainer) {
           country
         );
 
-        getWeatherOverview(cityId, cityName).then(
-          ({ html, weatherData, currentWeatherData }) => {
-            document.querySelector("#app").innerHTML = html;
-            setBackground(
-              currentWeatherData.currentId,
-              weatherData.dt,
-              weatherData.sys
-            );
-            closeSearchModal();
-            requestAnimationFrame(() => setupEventListeners());
-          }
+        if (!cityId) {
+          alert(
+            "Die Wetterdaten für diese Stadt konnten nicht gefunden werden."
+          );
+          return;
+        }
+
+        const result = await getWeatherOverview(cityId, cityName);
+
+        if (!result) {
+          alert(
+            "Fehler beim Laden der Wetterdaten. Bitte versuchen Sie es erneut."
+          );
+          const menuHtml = await getMenuOverview();
+          document.querySelector("#app").innerHTML = menuHtml;
+          setTimeout(() => setupEventListeners(), 200);
+          closeSearchModal();
+          return;
+        }
+
+        const { html, weatherData, currentWeatherData } = result;
+        document.querySelector("#app").innerHTML = html;
+        setBackground(
+          currentWeatherData.currentId,
+          currentWeatherData.currentDt,
+          currentWeatherData.currentSys
         );
+        closeSearchModal();
+        requestAnimationFrame(() => setupEventListeners());
       });
     });
 }
