@@ -22,16 +22,16 @@ body {
 
 #app {
   font-family: $font-quicksand;
-  min-height: 100vh;
+  height: 100vh;
+  height: 100dvh;
   width: 100vw;
-  overflow: auto;
-  min-height: unset;
+  overflow: hidden;
 
   @include largeScreens {
     height: 900px;
     width: 400px;
     min-height: unset;
-    overflow: auto;
+    overflow: hidden;
     ::-webkit-scrollbar {
       display: none;
     }

@@ -43,7 +43,7 @@ export function panelOverview(
             alt="Sunrise Icon"
           /> 
           <p class="weather-panel__sunrise">
-          ${timeFormatter(sunrise)}</p>
+          ${timeFormatter(sunrise, currentTimezone)}</p>
           <img
             style="width: 40px; height: 40px"
             class="weather-panel__sunset-icon"
@@ -51,7 +51,7 @@ export function panelOverview(
             alt="Sunset Icon"
           /> 
           <p class="weather-panel__sunset">
-          ${timeFormatter(sunset)}</p>
+          ${timeFormatter(sunset, currentTimezone)}</p>
         </div>
       </div>`;
 }

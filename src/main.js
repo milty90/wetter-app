@@ -155,7 +155,7 @@ function setupEventListeners() {
     weatherForecastTitle
   ) {
     weatherMain.addEventListener("scroll", () => {
-      if (weatherMain.scrollTop > 120) {
+      if (weatherMain.scrollTop > 80) {
         weatherPanel.classList.add("weather-panel--sticky");
         weatherForecastContainer.classList.add("with-sticky-header");
         weatherForecastTitle.classList.add("with-sticky-header");
@@ -477,7 +477,7 @@ function openSearchModal() {
         searchResults.innerHTML =
           '<div class="search-view__error">Bei der Suche ist ein Fehler aufgetreten.</div>';
       }
-    }, 500);
+    }, 300);
   });
 
   searchInput.addEventListener("keypress", (e) => {
