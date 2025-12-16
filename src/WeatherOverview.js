@@ -70,6 +70,11 @@ export async function weatherOverview(data, currentData) {
   const {
     name: currentCity,
     timezone: currentTimezone,
+    main: {
+      temp: currentTemp,
+      temp_max: currentTempMax,
+      temp_min: currentTempMin,
+    },
     weather: [{ id: currentWeatherId, description: currentDescription }],
     dt: currentDt,
   } = currentData || {};
@@ -95,9 +100,9 @@ export async function weatherOverview(data, currentData) {
         currentCity,
         country,
         currentDt,
-        temp,
-        temp_max,
-        temp_min,
+        currentTemp,
+        currentTempMax,
+        currentTempMin,
         sunrise,
         sunset,
         currentTimezone

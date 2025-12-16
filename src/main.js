@@ -155,7 +155,7 @@ function setupEventListeners() {
     weatherForecastTitle
   ) {
     weatherMain.addEventListener("scroll", () => {
-      if (weatherMain.scrollTop > 80) {
+      if (weatherMain.scrollTop > 120) {
         weatherPanel.classList.add("weather-panel--sticky");
         weatherForecastContainer.classList.add("with-sticky-header");
         weatherForecastTitle.classList.add("with-sticky-header");
