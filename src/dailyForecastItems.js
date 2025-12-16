@@ -3,7 +3,7 @@ import { dayFormatter, hourFormatter } from "./formatters";
 import { bodyDetails } from "./bodyDetails";
 
 export function generateHourlyForecast(data, timezone) {
-  data.list
+  return data.list
     .slice(0, 8)
     .map((item) =>
       forecastItem(

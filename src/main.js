@@ -1,6 +1,6 @@
 import "/styles/style.scss";
 import "/src/wetterApi.js";
-import { getWeatherOverview } from "./WeatherOverview.js";
+import { getWeatherOverview } from "./weatherOverview.js";
 import { getMenuOverview } from "./menuOverview";
 import { setBackground } from "./backgroundManager";
 import { saveCityInLocalState } from "./localStateManager";
@@ -155,7 +155,7 @@ function setupEventListeners() {
     weatherForecastTitle
   ) {
     weatherMain.addEventListener("scroll", () => {
-      if (weatherMain.scrollTop > 130) {
+      if (weatherMain.scrollTop > 120) {
         weatherPanel.classList.add("weather-panel--sticky");
         weatherForecastContainer.classList.add("with-sticky-header");
         weatherForecastTitle.classList.add("with-sticky-header");
