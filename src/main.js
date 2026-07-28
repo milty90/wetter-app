@@ -29,17 +29,17 @@ function setupEventListeners() {
   const weatherMain = document.querySelector(".weather-main");
   const weatherPanel = document.querySelector(".weather-panel");
   const weatherForecastTitle = document.querySelector(
-    ".weather-forecast__title-Hours"
+    ".weather-forecast__title-Hours",
   );
   const weatherForecastContainer = document.querySelector(
-    ".weather-forecast__container"
+    ".weather-forecast__container",
   );
 
   const arrowDownIcons = document.querySelectorAll(
-    ".weather-forecast__arrow-down-icon"
+    ".weather-forecast__arrow-down-icon",
   );
   const arrowUpIcons = document.querySelectorAll(
-    ".weather-forecast__arrow-up-icon"
+    ".weather-forecast__arrow-up-icon",
   );
 
   if (arrowUpIcons.length > 0 && arrowDownIcons.length > 0) {
@@ -47,13 +47,13 @@ function setupEventListeners() {
       const arrowDownIcon = arrowDownIcons[index];
       const dayItem = arrowUpIcon.closest(".weather-forecast__dayItem");
       const bodyDetails = dayItem?.querySelector(
-        ".weather-forecast__body-details"
+        ".weather-forecast__body-details",
       );
       const hourlyItems = dayItem?.querySelector(
-        ".weather-forecast__hourlyItems"
+        ".weather-forecast__hourlyItems",
       );
       const divider = dayItem?.querySelector(
-        ".weather-forecast__dayItem-body-divider"
+        ".weather-forecast__dayItem-body-divider",
       );
 
       arrowUpIcon.addEventListener(
@@ -85,7 +85,7 @@ function setupEventListeners() {
             }
           }, 100);
         },
-        { signal }
+        { signal },
       );
     });
 
@@ -93,13 +93,13 @@ function setupEventListeners() {
       const arrowUpIcon = arrowUpIcons[index];
       const dayItem = arrowDownIcon.closest(".weather-forecast__dayItem");
       const bodyDetails = dayItem?.querySelector(
-        ".weather-forecast__body-details"
+        ".weather-forecast__body-details",
       );
       const hourlyItems = dayItem?.querySelector(
-        ".weather-forecast__hourlyItems"
+        ".weather-forecast__hourlyItems",
       );
       const divider = dayItem?.querySelector(
-        ".weather-forecast__dayItem-body-divider"
+        ".weather-forecast__dayItem-body-divider",
       );
 
       arrowDownIcon.addEventListener(
@@ -132,7 +132,7 @@ function setupEventListeners() {
             if (divider) divider.classList.add("show");
           }, 100);
         },
-        { signal }
+        { signal },
       );
     });
   }
@@ -209,17 +209,17 @@ function setupEventListeners() {
 
       menuButton.classList.add("weather-panel__option-button--rotating-exit");
       menuButton.classList.remove(
-        "weather-panel__option-button--rotation-reset"
+        "weather-panel__option-button--rotation-reset",
       );
 
       setTimeout(() => {
         menuButton.classList.add("u-hidden");
         menuButton.classList.remove("u-block");
         menuButton.classList.remove(
-          "weather-panel__option-button--rotating-exit"
+          "weather-panel__option-button--rotating-exit",
         );
         menuButton.classList.add(
-          "weather-panel__option-button--rotation-reset"
+          "weather-panel__option-button--rotation-reset",
         );
 
         if (cancelButton) {
@@ -237,54 +237,54 @@ function setupEventListeners() {
 
         if (cancelButton) {
           cancelButton.classList.add(
-            "weather-panel__option-button--fading-out"
+            "weather-panel__option-button--fading-out",
           );
           cancelButton.classList.remove(
-            "weather-panel__option-button--fading-in"
+            "weather-panel__option-button--fading-in",
           );
         }
         if (arrowButton) {
           arrowButton.classList.add("weather-panel__option-button--fading-out");
           arrowButton.classList.remove(
-            "weather-panel__option-button--fading-in"
+            "weather-panel__option-button--fading-in",
           );
         }
         if (favoriteButton) {
           favoriteButton.classList.add(
-            "weather-panel__option-button--fading-out"
+            "weather-panel__option-button--fading-out",
           );
           favoriteButton.classList.remove(
-            "weather-panel__option-button--fading-in"
+            "weather-panel__option-button--fading-in",
           );
         }
 
         setTimeout(() => {
           if (cancelButton) {
             cancelButton.classList.remove(
-              "weather-panel__option-button--fading-out"
+              "weather-panel__option-button--fading-out",
             );
             cancelButton.classList.add(
-              "weather-panel__option-button--fading-in"
+              "weather-panel__option-button--fading-in",
             );
           }
         }, 50);
         setTimeout(() => {
           if (arrowButton) {
             arrowButton.classList.remove(
-              "weather-panel__option-button--fading-out"
+              "weather-panel__option-button--fading-out",
             );
             arrowButton.classList.add(
-              "weather-panel__option-button--fading-in"
+              "weather-panel__option-button--fading-in",
             );
           }
         }, 100);
         setTimeout(() => {
           if (favoriteButton) {
             favoriteButton.classList.remove(
-              "weather-panel__option-button--fading-out"
+              "weather-panel__option-button--fading-out",
             );
             favoriteButton.classList.add(
-              "weather-panel__option-button--fading-in"
+              "weather-panel__option-button--fading-in",
             );
           }
         }, 150);
@@ -296,7 +296,7 @@ function setupEventListeners() {
     cancelButton.addEventListener("click", () => {
       cancelButton.classList.add("weather-panel__option-button--rotating-exit");
       cancelButton.classList.remove(
-        "weather-panel__option-button--rotation-reset"
+        "weather-panel__option-button--rotation-reset",
       );
 
       setTimeout(() => {
@@ -311,10 +311,10 @@ function setupEventListeners() {
         cancelButton.classList.add("u-hidden");
         cancelButton.classList.remove("u-block");
         cancelButton.classList.remove(
-          "weather-panel__option-button--rotating-exit"
+          "weather-panel__option-button--rotating-exit",
         );
         cancelButton.classList.add(
-          "weather-panel__option-button--rotation-reset"
+          "weather-panel__option-button--rotation-reset",
         );
 
         menuButton.classList.remove("u-hidden");
@@ -324,7 +324,7 @@ function setupEventListeners() {
 
         setTimeout(() => {
           menuButton.classList.remove(
-            "weather-panel__option-button--fading-out"
+            "weather-panel__option-button--fading-out",
           );
           menuButton.classList.add("weather-panel__option-button--fading-in");
         }, 50);
@@ -415,10 +415,10 @@ function setupEventListeners() {
             setBackground(
               currentWeatherData.currentId,
               currentWeatherData.currentDt,
-              currentWeatherData.currentSys
+              currentWeatherData.currentSys,
             );
             setTimeout(() => setupEventListeners(), 200);
-          }
+          },
         );
       });
     });
@@ -483,7 +483,7 @@ function openSearchModal() {
   searchInput.addEventListener("keypress", (e) => {
     if (e.key === "Enter") {
       const firstResult = searchResults.querySelector(
-        ".search-view__result-item"
+        ".search-view__result-item",
       );
       if (firstResult) {
         firstResult.click();
@@ -540,12 +540,12 @@ async function displaySearchResults(cities, resultsContainer) {
 
         const cityId = await getIdbyLocationandCountry(
           cityNameCutter(cityName),
-          country
+          country,
         );
 
         if (!cityId) {
           alert(
-            "Die Wetterdaten für diese Stadt konnten nicht gefunden werden."
+            "Die Wetterdaten für diese Stadt konnten nicht gefunden werden.",
           );
           return;
         }
@@ -554,7 +554,7 @@ async function displaySearchResults(cities, resultsContainer) {
 
         if (!result) {
           alert(
-            "Fehler beim Laden der Wetterdaten. Bitte versuchen Sie es erneut."
+            "Fehler beim Laden der Wetterdaten. Bitte versuchen Sie es erneut.",
           );
           const menuHtml = await getMenuOverview();
           document.querySelector("#app").innerHTML = menuHtml;
@@ -568,7 +568,7 @@ async function displaySearchResults(cities, resultsContainer) {
         setBackground(
           currentWeatherData.currentId,
           currentWeatherData.currentDt,
-          currentWeatherData.currentSys
+          currentWeatherData.currentSys,
         );
         closeSearchModal();
         requestAnimationFrame(() => setupEventListeners());
